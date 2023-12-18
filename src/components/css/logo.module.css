@@ -1,0 +1,19 @@
+@media (max-width:468px){
+    .logo{
+        width:150px;
+        height:40px;
+    }
+}
+
+@media (max-width:368px){
+    .logo{
+        width:140px;
+        height:40px;
+    }
+}
+
+.logoText{
+    font-size: 3.2rem;
+    font-weight: 700;
+    color: rgb(228, 1, 1);
+}

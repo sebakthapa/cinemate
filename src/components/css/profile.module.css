@@ -1,0 +1,35 @@
+.profile {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: fit-content;
+    cursor: pointer;
+    opacity: .9;
+    transition: .2s ease-in-out;
+}
+
+.profile__text{
+    text-align: center;
+}
+
+.profile:hover {
+    opacity: 1;
+    transform: translateY(-5px);
+}
+
+.profile:active {
+    opacity: 1;
+    transform: scale(.99) translateY(-5px);
+    filter: brightness(70%)
+}
+
+
+
+
+@media (max-width:468px){
+    .profile{
+        height: 100px;
+        width:100px;
+    }
+}

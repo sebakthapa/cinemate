@@ -1,0 +1,164 @@
+/* .body {
+    --accent: #8855ff;
+    width: 100vw;
+    height: 100vh;
+    background: var(--accent);
+    overflow: hidden;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  } */
+
+.tabContainer {
+    width: 100%;
+    min-height: 100%;
+    box-shadow: 0 1px 1px hsl(0deg 0% 0% / 0.075),
+        0 2px 2px hsl(0deg 0% 0% / 0.075), 0 4px 4px hsl(0deg 0% 0% / 0.075),
+        0 8px 8px hsl(0deg 0% 0% / 0.075), 0 16px 16px hsl(0deg 0% 0% / 0.075);
+    display: flex;
+    flex-direction: column;
+}
+
+
+.tabContainer nav {
+    position: relative;
+    padding: 5px 5px 0;
+    border-radius: 10px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    border-bottom: 2px solid rgba(255,255,255,.1);
+}
+
+.tabContainer nav::before{
+    position: absolute;
+    content: "";
+    top:0;
+    right:0;
+    width:50px;
+    height: 100%;
+    z-index: 111;
+    background: linear-gradient(to right, transparent, rgba(00,0,0,.7), black);
+    /* background: red; */
+}
+
+.tabs {
+    flex-grow: 1;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-end;
+    flex-wrap: nowrap;
+    width: 100%;
+}
+
+/* .tabContainer main {
+    
+} */
+
+.tab{
+    overflow-x: hidden;
+}
+
+.tabContainer ul,
+.tabContainer li {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    font-weight: 500;
+}
+
+.tabContainer ul {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    width: 100%;
+    gap: 3rem;
+    overflow-x: auto;
+}
+
+
+.tabContainer li {
+    padding: 1rem 0rem;
+    position: relative;
+    cursor: pointer;
+    user-select: none;
+    color:#777;
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    font-weight: 600;
+    flex-shrink: 0;
+}
+
+.underline {
+    position: absolute;
+    bottom: 0px;
+    border-radius: 1px;
+    left: 0;
+    right: 0;
+    height: 6px;
+    background: red;
+}
+
+.tabContainer li.selected {
+    color:#ddd;
+}
+
+.tabContainer li button {
+    width: 20px;
+    height: 20px;
+    border: 0;
+    background: #fff;
+    border-radius: 3px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    stroke: #000;
+    margin-left: 10px;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 300px;
+    background: #fff;
+}
+
+.add-item {
+    width: 30px;
+    height: 30px;
+    background: #eee;
+    border-radius: 50%;
+    border: 0;
+    cursor: pointer;
+    align-self: center;
+}
+
+.add-item:disabled {
+    opacity: 0.9;
+    cursor: default;
+    pointer-events: none;
+}
+
+
+
+@media (max-width: 568px) {
+    .tabContainer li {
+        font-size: .9rem;
+    }
+
+    .underline {
+        height: 4px;
+    }
+
+    .tabContainer ul {
+        gap: 2.2rem;
+    }
+   
+
+
+}

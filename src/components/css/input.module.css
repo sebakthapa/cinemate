@@ -1,0 +1,101 @@
+.input {
+    margin-top: 30px;
+    width: 100%;
+}
+
+.input .inputContainer{
+    position:relative
+}
+
+
+.input input {
+    padding: 1.5rem 1.5rem .5rem 1.5rem;
+    border: 1px solid #555;
+    background: #444;
+    border-radius: 3px;
+    width: 100%;
+    font-size: 1.1rem;
+    color: #fff;
+    outline: none;
+    border: none;
+    transition: .3s ease-in-out;
+}
+
+.input input:hover {
+    background: #555;
+}
+
+.input label {
+    font-size: 1.1rem;
+    position: absolute;
+    top: 25px;
+    left: 1.5rem;
+    transform: translateY(-50%);
+    pointer-events: none;
+    transition: .2s ease-in-out;
+    color: #aaa;
+    display: inline-block;
+}
+
+.input input:focus {
+    background: #555;
+}
+
+.input input:focus~label,
+.input input:valid~label {
+    top: 10px;
+    font-size: .8rem;
+    left: 1.5rem;
+}
+
+
+
+
+
+.input.invalid .input__validation,
+.input.valid .input__validation {
+    position: relative;
+
+}
+
+.input.invalid .input__validation .input__validationGraphics::before,
+.input.valid .input__validation .input__validationGraphics::before {
+    content: "";
+    position: absolute;
+    top: -2px;
+    left: 0px;
+    width: 100%;
+    margin: auto;
+    height: 2px;
+    border-radius: 100px;
+}
+
+.input__validationMessage {
+    font-size: 14px;
+    padding-top: 5px;
+}
+
+
+.input.invalid .input__validationGraphics::before {
+    background: rgb(234, 0, 0);
+}
+
+.input.invalid .input__validationMessage {
+    color: rgb(226, 0, 0)
+}
+
+
+
+
+.input.valid .input__validationGraphics::before {
+    background: rgb(2, 185, 2);
+}
+
+.input.valid .input__validationMessage {
+    color: rgb(2, 185, 2)
+}
+
+
+.input.hidden .input__validation {
+    display: none;
+}

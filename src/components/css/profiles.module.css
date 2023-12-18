@@ -1,0 +1,87 @@
+.profiles__header {
+    display: flex;
+    width: 100vw;
+    justify-content: space-between;
+    padding: 2rem 4rem 1rem 2rem;
+}
+
+.profiles__signout {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.profiles__manage>button {
+    padding: 10px;
+    font-size: 1.1rem;
+    background: transparent;
+    color: #aaa;
+    border: 2px solid rgba(255, 255, 255, .2);
+    border-radius: 2px;
+    cursor: pointer;
+    transition: .3s ease-in-out;
+}
+
+.profiles__manage>button:hover {
+    background: rgb(189, 14, 22);
+    color: #fff;
+    border-color: transparent;
+}
+
+.profile__signoutBtn {
+    margin-left: 50px;
+    color: red;
+    font-size: 2rem;
+    cursor: pointer;
+    transition: .2s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.profile__signoutBtn p {
+    font-size: 1rem;
+}
+
+.profile__signoutBtn:hover {
+    transform: translateY(-5px);
+}
+
+.profile__signoutBtn:active {
+    transform: scale(.9);
+}
+
+.profiles__body {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    padding: 6rem 1rem;
+    
+
+}
+
+.profiles__title {
+    font-size: 2.5rem;
+    margin-bottom: 50px;
+}
+
+.profiles__container {
+    width: 100%;
+    padding:0 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 6rem;
+    text-transform: capitalize;
+}
+
+
+@media (max-width:468px){
+    .profiles__title{
+        font-size: 1.5rem;
+        margin-bottom: 70px;
+    }
+}

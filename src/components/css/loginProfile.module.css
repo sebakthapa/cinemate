@@ -1,0 +1,93 @@
+.loginProfile {
+    min-height: 100vh;
+}
+
+.loginProfile__greeting{
+    text-transform: capitalize;
+    text-align: center;
+    font-size: 3rem;
+    margin-top: -100px;
+
+
+}
+
+.loginProfile__body {
+
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.loginProfile__title {
+    font-size: 2rem;
+    margin-top: 100px;
+
+}
+
+.loginProfile__inputContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.loginProfile__inputContainer input {
+    width: 100px;
+    height: 100px;
+    padding: 20px;
+    font-size: 3rem;
+    text-align: center;
+    background: rgba(142, 142, 142, 0.085);
+    border: 2px solid rgba(255, 255, 255, .2);
+    color: #fff;
+}
+
+.loginProfile__error {
+    margin-top: 20px;
+    color: red;
+
+}
+
+.loginProfile__button{
+    padding:10px;
+    background:red;
+    margin-top: 30px;
+    border-radius: 3px;
+    transition: .3s linear;
+}
+
+.loginProfile__button:hover{
+    background-color: rgb(201, 11, 11);
+}
+
+
+@media (max-width: 468px){
+    
+.loginProfile__inputContainer input {
+    width: 50px;
+    height: 50px;
+    padding: 5px;
+    font-size: 2rem;
+}
+
+
+.loginProfile__greeting{
+    font-size: 2rem;
+}
+
+.loginProfile__title {
+    font-size: 1.3rem;
+}
+
+.loginProfile__button{
+    padding:10px;
+    background:red;
+    margin-top: 10px;
+    border-radius: 3px;
+    transition: .3s linear;
+}
+}

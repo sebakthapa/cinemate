@@ -1,0 +1,50 @@
+.row {
+    /* 0 horizontal padding cuz' needed for movie details page */
+    padding: 1rem 0;
+    max-width: 100%;
+    position: relative;
+
+}
+
+
+.container::before {
+    position: absolute;
+    content: "";
+    width: 120px;
+    height: 100%;
+    /* border: dotted red; */
+    background: linear-gradient(to right, transparent,rgba(0,0,0,.5), rgba(0,0,0,.7),  black);
+    z-index: 1111;
+    top: 0;
+    right: 0;
+    pointer-events: none;
+
+
+}
+
+
+
+.rowTitle {
+    text-transform: capitalize;
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: #ddd;
+}
+
+.container {
+    display: flex;
+    gap: 1.2rem;
+    overflow-x: auto;
+    scrollbar-width: none;
+    /* Firefox */
+    -ms-overflow-style: none;
+    /* Internet Explorer and Microsoft Edge */
+    padding: 1rem 0;
+    padding-right:50px;
+}
+
+
+
+.container::-webkit-scrollbar {
+    display: none;
+}
