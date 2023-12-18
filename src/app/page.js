@@ -118,7 +118,7 @@ function GetStarted() {
                                         <input type="text" required value={email} onChange={(e) => setEmail(e.target.value)} onKeyDown={(e) => e.code === "Enter" && navigate("/signup", { state: { email: email } })} />
                                         <label>Email address</label>
                                     </div>
-                                    <button ><Link href={`/signup?e=${email}`}>Get Started</Link></button>
+                                    <button className={styles.getStarted} ><Link href={`/signup?e=${email}`}>Get Started</Link></button>
                                 </div>
                             </div>
                         </div>
@@ -145,7 +145,7 @@ function GetStarted() {
                                         <input type="text" required value={email} onChange={(e) => setEmail(e.target.value)} />
                                         <label>Email address</label>
                                     </div>
-                                    <button onClick={() => navigate("/signup", { state: { email: email } })}>Get Started</button>
+                                    <button className={styles.getStarted} onClick={() => router.push(`/signup?e=${email}`) }>Get Started</button>
                                 </div>
                             </div>
                         </div>
