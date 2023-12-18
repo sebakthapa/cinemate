@@ -23,7 +23,6 @@ export const tmdbBaseUrl = "https://api.themoviedb.org/3";
 export const tmdbImageBaseUrl = "http://image.tmdb.org/t/p/"
 
 
-// https://api.themoviedb.org/3/trending/all/week?language=en-US&api_key=66368903cda0d5cb27c63b040754b459
 
 
 const movieGenres = [// 19
@@ -180,7 +179,7 @@ export const fetchGenre = async (category, isKid) => {
     {
       headers: {
         accept: 'application/json',
-        Authorization: 'Bearer 314c36b6995f6489ef35b3322ad7a190'
+        Authorization: `Bearer ${process.env.TMDB_API_KEY}` 
       }
     });
   return res.data.genres

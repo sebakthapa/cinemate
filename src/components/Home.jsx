@@ -5,7 +5,6 @@ import { requests, tmdbBaseUrl } from "@/lib/tmdb"
 
 
 function Home() {
-
     return (
         <div style={{padding: "0 2rem", marginTop:"2rem"}}>
             {/* <div className={styles.bdy}> */}
@@ -13,9 +12,6 @@ function Home() {
                 <Row title="trending movies" fetchUrl={`${tmdbBaseUrl}${requests.trendingMovies}`} />
                 <Row title="trending shows" fetchUrl={`${tmdbBaseUrl}${requests.trendingShows}`} />
             {/* </div> */}
-
-
-
         </div>
     )
 }

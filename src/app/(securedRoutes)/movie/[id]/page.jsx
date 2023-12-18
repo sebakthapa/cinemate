@@ -4,11 +4,11 @@ import { minuteToHour } from "@/lib";
 
 
 const fetchData = async (url) => {
-  const res = await fetch(url, {
+  const res = await fetch(`${url}&api_key=${process.env.TMDB_API_KEY}`, {
     cache: "force-cache",
     headers: {
       accept: 'application/json',
-      Authorization: 'Bearer 314c36b6995f6489ef35b3322ad7a190'
+      Authorization: `Bearer ${process.env.TMDB_API_KEY}`
     }
   });
   https://api.themoviedb.org/3/movie/movie_id?language=en-US
@@ -21,11 +21,11 @@ const fetchData = async (url) => {
 const page = async ({ params }) => {
   const id = params?.id;
 
-  const movieData = id && await fetchData(`${tmdbBaseUrl}/movie/${id}?language=en-US&api_key=314c36b6995f6489ef35b3322ad7a190`);
+  const movieData = id && await fetchData(`${tmdbBaseUrl}/movie/${id}?language=en-US`);
 
-  const videosData = id && await fetchData(`${tmdbBaseUrl}/movie/${id}/videos?language=en-US&api_key=314c36b6995f6489ef35b3322ad7a190`)
+  const videosData = id && await fetchData(`${tmdbBaseUrl}/movie/${id}/videos?language=en-US`)
   // console.log(videosData)
-  const starrings = id && await fetchData(`${tmdbBaseUrl}/movie/${id}/credits?language=en-US&api_key=314c36b6995f6489ef35b3322ad7a190`)
+  const starrings = id && await fetchData(`${tmdbBaseUrl}/movie/${id}/credits?language=en-US`)
   // console.log("starrings: ", starrings.cast)
 
   const similarMoviesUrl = `${tmdbBaseUrl}/movie/${id}/similar?language=en-US`;

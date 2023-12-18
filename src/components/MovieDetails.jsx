@@ -126,7 +126,7 @@ const MovieDetails = ({ title, production_companies, starrings, tagline, image, 
 
 
                                 <div className={styles.similarMovies}>
-                                    <h4 className="">similar {mediaType}s</h4>
+                                    <h4 className="">{ `similar ${mediaType}s` }</h4>
 
                                     <Row mediaType={mediaType} fetchUrl={similarMoviesUrl} title={""} />
                                 </div>

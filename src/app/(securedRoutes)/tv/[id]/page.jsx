@@ -8,7 +8,7 @@ const fetchData = async (url) => {
     cache: "force-cache",
     headers: {
       accept: 'application/json',
-      Authorization: 'Bearer 314c36b6995f6489ef35b3322ad7a190'
+      Authorization: `Bearer ${process.env.TMDB_API_KEY}`
     }
   });
 

@@ -1,10 +1,11 @@
 "use client"
 
 import styles from "./css/row.module.css"
-import { tmdbImageBaseUrl } from "@/lib/tmdb";
+import { fetchRowData, tmdbImageBaseUrl } from "@/lib/tmdb";
 import MovieCard from "@/components/MovieCard";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import axios from "axios";
 
 
 
@@ -21,29 +22,26 @@ const Row = ({ title, fetchUrl, fetchedData, mediaType }) => {
 
     const fetchData = async () => {
         try {
-            const res = await fetch(`${fetchUrl}&page=${currentPage}&include_adult=${!profile.isKid}&api_key=314c36b6995f6489ef35b3322ad7a190`, {
-                method: "GET",
-                headers: {
-                    accept: 'application/json',
-                    Authorization: 'Bearer 314c36b6995f6489ef35b3322ad7a190'
-                }
-            });
-            if (res.status == 200) {
-                const lists = await res.json();
-                console.log(lists.results);
+            const res = await axios.post("/api/tmdb/rowdata", {
+                fetchUrl,
+                isKid: profile.isKid,
+                currentPage
+            })
+            console.log(res)
 
+            if (res.status == 200) {
                 // Check if the current page is the same as the last fetched page
+
                 if (currentPage != lastFetchedPage) {
-                    setData(prevData => [...prevData, ...lists.results]);
+                    setData(prevData => [...prevData, ...res.data]);
                     setLastFetchedPage(currentPage); // Update the last fetched page
                 }
-
             } else {
-                // alert("unable to get data")
+                alert("unable to get data")
 
             }
         } catch (error) {
-            throw error;
+            console.log(error);
         }
 
 
@@ -69,7 +67,6 @@ const Row = ({ title, fetchUrl, fetchedData, mediaType }) => {
     useEffect(() => {
         if (fetchUrl) {
             fetchData();
-            console.log("rw data", data)
         } else {
             console.log("fetchedData,", fetchedData)
         }
