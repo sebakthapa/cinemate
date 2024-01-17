@@ -81,11 +81,12 @@ const Row = ({ title, fetchUrl, fetchedData, mediaType }) => {
                         <h2 className={styles.rowTitle}>{title}</h2>
                         <div onScroll={handleScroll} className={styles.container}>
                             {
-                                data?.length > 0 && data?.map(({ title, poster_path, id, media_type }, idx) => {
+                                data?.length > 0 && data?.map(({ name, poster_path, id, media_type, ...rest }, idx) => {
+                                    console.log(media_type, mediaType)
                                     !poster_path && "";
 
                                     return (
-                                        poster_path && <MovieCard key={idx} image={`${tmdbImageBaseUrl}/w185/${poster_path}`} link={`/${media_type || mediaType}/${id}`} title={title} />
+                                        poster_path && <MovieCard key={idx} image={`${tmdbImageBaseUrl}/w185/${poster_path}`} link={`/${media_type || mediaType}/${id}`} title={name} />
                                     )
                                 })
                             }

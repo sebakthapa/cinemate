@@ -8,10 +8,11 @@ const TvMoviePage = async ({ type }) => {
     return (
         <div>
             {
-                genres.length > 0 && genres.map(({ id, name }) => {
-                    return (
+                genres.length > 0 && genres.map(({ id, name, ...rest }) => {
+                    console.log("RESTT", {id, name, ...rest})
+                    return (    
                         <Row
-                            mediaType={"type"}
+                            mediaType={type}
                             key={id}
                             title={name}
                             fetchUrl={`${tmdbBaseUrl}/discover/${type}?with_genres=${id}&language=en-US&sort_by=popularity.desc`}

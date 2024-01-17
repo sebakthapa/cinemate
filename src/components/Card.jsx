@@ -5,7 +5,7 @@ function Card({ image, title, subtitle }) {
     return (
         <div className={styles.card}>
             <div className={styles.card__image}>
-                <Image src={image} height="500" width="700" alt="Banner image for this card" />
+                <Image loading="lazy" src={image} height="500" width="700" alt="Banner image for this card" />
             </div>
             <div className={styles.card__content}>
                 <h2 className={styles.card__title}>

@@ -1,0 +1,177 @@
+.search {
+    min-height: 100vh;
+    padding-top: 1rem;
+
+}
+
+.searchInput {
+    width: 100%;
+    border-radius: 5px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #000;
+    border: 2px solid #222;
+    max-width: 600px;
+    margin: auto;
+    transition: .3s ease-in-out;
+
+}
+
+.searchInput input {
+    width: 100%;
+    padding: .7rem 1.4rem;
+    border: none;
+    font-size: 1.2rem;
+    background-color: transparent;
+    outline: none;
+}
+
+.searchInput:hover {
+    background: #111;
+}
+
+.searchInput:focus-within {
+    background: #111;
+    border: 2px solid #777;
+
+}
+
+.searchInput button {
+    background: transparent;
+    font-size: 1.2rem;
+    border: none;
+    cursor: pointer;
+    padding: .8rem 1rem;
+}
+
+
+.emptyMessage {
+    margin: auto;
+    width: fit-content;
+    margin-top: 20vh;
+    font-size: 1.5rem;
+    color: #999;
+    font-weight: 600;
+}
+
+.cardsContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+    padding: 1rem 2rem;
+    width: fit-content;
+    margin: auto;
+    max-width: 850px;
+    margin-top: 2rem;
+
+}
+
+.card {
+    display: flex;
+    width: 100%;
+    border: 2px solid #222;
+    position: relative;
+    padding:2rem;
+    border-radius: 10px;
+    transition: .3s ease;
+}
+
+.card:hover{
+    border-color: #444;
+}
+
+.card .topLeft {
+    display: flex;
+    gap: 1rem;
+    color: #aaa;
+}
+
+.card .releaseDate {
+    text-transform: capitalize;
+}
+
+
+.cardName {
+    font-size: 1.4rem;
+    font-weight: 400;
+    color: #ddd;
+    margin-bottom: .5rem;
+}
+
+.card .genre {
+    margin-top: 1.5rem;
+    color: #777;
+}
+
+
+
+.card img {
+    object-fit: contain;
+}
+
+.card .left {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 60%;
+    z-index: 111;
+
+}
+.cardOverview {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    color: #aaa;
+    font-size: 14px;
+    width: 80%;
+}
+
+.card .rating{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    width: fit-content;
+    margin-top: 1.4rem;
+    font-size: 1.2rem;
+    color: #ccc;
+}
+
+.card .rating svg{
+    color:rgb(197, 197, 0)
+}
+
+.card .right {
+    position: absolute;
+    right:0;
+    top:0;
+    width: 50%;
+    height: 100%;
+}
+
+.card .right img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    z-index: 1;
+
+}
+
+.card .right::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    background: rgb(0,0,0);
+    background: linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0.5) 60%, rgba(255,255,255,0) 100%);
+    z-index: 11;
+}
+
+
+
+

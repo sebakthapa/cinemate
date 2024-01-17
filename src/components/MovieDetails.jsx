@@ -6,14 +6,19 @@ import Image from "next/image"
 import Row from "./Row"
 import YoutubeVideoRow from "./YoutubeVideoRow"
 import { useEffect, useState } from "react"
-import { usePathname } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
+import { TbPlayerPlay } from "react-icons/tb"
+import movieTrailer from "movie-trailer"
+import YouTube from "react-youtube"
+import { IoClose } from "react-icons/io5"
+import toast from "react-hot-toast"
 
 const MovieDetails = ({ title, production_companies, starrings, tagline, image, releaseDate, duration, overview, genres, similarMoviesUrl, lastReleasedEpisode, rating, adult, videos, movieId, recommendationUrl, seasons, seasonCount, episodeCount, createdBy }) => {
-    console.log(seasons)
+    const router = useRouter()
 
     const pathname = usePathname();
     const [mediaType, setMediaType] = useState("")
-
+    const [trailerId, setTrailerId] = useState("");
 
     const videoTypes = [];
 
@@ -26,10 +31,39 @@ const MovieDetails = ({ title, production_companies, starrings, tagline, image, 
         setMediaType(media)
 
     }, [pathname])
+    console.log(pathname.split("/").at(-2))
+
+    const handlePlay = async (e) => {
+        try {
+            if (trailerId) {
+                setTrailerId("")
+            } else {
+                console.log(movieId)
+                const id = await movieTrailer(title || null, { id:true })
+                console.log(id)
+                if (!id) {
+                    toast("Sorry! This video is currently unavailable.")
+                    e.target.setAttribute("disabled", true);
+                    setTimeout(() => {
+                        e.target.removeAttribute("disabled")
+                    }, 5000)
+                    return;
+                }
+
+                setTrailerId(id)
+            }
+
+        } catch (error) {
+            console.log(error)
+        }
+
+
+    }
+
     return (
         <div className={styles.movieDetails}>
             <div className={styles.image}>
-                <Image priority src={image} width="500" height="900" alt={`${title} poster`} />
+                <Image priority src={image} width="500" height="800" alt={`${title} poster`} />
             </div>
             <div className={styles.contents}>
                 <div className={styles.header}>
@@ -65,7 +99,17 @@ const MovieDetails = ({ title, production_companies, starrings, tagline, image, 
                                     </div>
                                     <div className={styles.description}>
                                         {overview}
+                                        <button onClick={handlePlay} className={styles.watchNowBtn}>
+                                            {
+                                                !trailerId ? (
+                                                    <>
+                                                        Play
+                                                        <TbPlayerPlay fontSize={"1.2rem"} /></>
+                                                ) : "Close"
+                                            }
+                                        </button >
                                     </div>
+
                                 </div>
 
 
@@ -126,7 +170,7 @@ const MovieDetails = ({ title, production_companies, starrings, tagline, image, 
 
 
                                 <div className={styles.similarMovies}>
-                                    <h4 className="">{ `similar ${mediaType}s` }</h4>
+                                    <h4 className="">{`similar ${mediaType}s`}</h4>
 
                                     <Row mediaType={mediaType} fetchUrl={similarMoviesUrl} title={""} />
                                 </div>
@@ -154,6 +198,35 @@ const MovieDetails = ({ title, production_companies, starrings, tagline, image, 
                     </TabsContainer>
                 </div>
             </div>
+
+            {
+                trailerId && (
+                    <>
+                        <div className={styles.player} >
+                            <div className={styles.videoContainer}>
+                                <div onClick={() => setTrailerId("")} className={styles.close} > <IoClose fontSize={"2.2rem"} fontWeight={"900"} /> </div>
+                                <YouTube
+                                    videoId={trailerId}
+                                    iframeClassName={styles.iframePlayer}
+                                    className={styles.youtubePlayer}
+                                    opts={{
+                                        width: "100%",
+                                        height: "100%",
+                                        playerVars: {
+                                            autoplay: 1,
+                                            // controls: 0,
+                                            color: "white",
+                                            rel: 0,
+                                        }
+                                    }}
+                                />
+                            </div>
+                        </div>
+                    </>
+
+                )
+            }
+
         </div>
     )
 }

@@ -19,3 +19,10 @@
     margin:0
 }
 
+@media (max-width: 662px){
+    .image img{
+        width:calc(92px + 5vw);
+        aspect-ratio: 3/4;
+    }
+}
+
