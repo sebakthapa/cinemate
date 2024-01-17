@@ -3,6 +3,7 @@ import './globals.css'
 import { Inter } from 'next/font/google'
 import { websiteName } from '@/lib'
 import { Toaster } from 'react-hot-toast'
+import PageLoader from '@/components/PageLoader'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -34,7 +35,10 @@ export default function RootLayout({ children }) {
               },
             }}
           />
+
+          
           {children}
+
         </ReduxProvider>
 
       </body>

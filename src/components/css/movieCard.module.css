@@ -1,7 +1,7 @@
 .movieCard{
     transition: .3s ease-in-out;
     padding:0;
-    opacity: .8;
+    opacity: .9;
 }
 
 .movieCard:hover{
@@ -11,7 +11,7 @@
 
 .image img{
     object-fit: contain;
-    opacity:0.8;
+    opacity:1;
     margin:0;
 }
 
