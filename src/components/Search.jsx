@@ -29,10 +29,13 @@ const Search = ({ searchText: searchedText }) => {
 
     return (
         <div className={styles.search}>
-            <form onSubmit={handleSearch} className={styles.searchInput}>
-                <input autoFocus={pathname.split("/").at(-1) == "search" ? true : false} placeholder='Search...' type="text" value={searchText} onChange={(e) => setSearchText(e.target.value)} />
-                <button><FaSearch /></button>
-            </form >
+            <div className={styles.searchInputContainer}>
+
+                <form onSubmit={handleSearch} className={styles.searchInput}>
+                    <input autoFocus={pathname.split("/").at(-1) == "search" ? true : false} placeholder='Search...' type="text" value={searchText} onChange={(e) => setSearchText(e.target.value)} />
+                    <button><FaSearch /></button>
+                </form >
+            </div>
 
             <main className="resultContainer">
                 {
@@ -92,7 +95,12 @@ const Search = ({ searchText: searchedText }) => {
 
                                     </div>
                                     <div className={styles.right}>
-                                        <Image src={`${tmdbImageBaseUrl}/w300/${backdrop_path}`} alt={`${name || title} photo`} width={300} height={169} />
+                                        {
+                                            backdrop_path && (
+                                                <Image src={`${tmdbImageBaseUrl}/w300/${backdrop_path}`} alt={`${name || title} photo`} width={300} height={169} />
+                                            )
+                                        }
+
                                     </div>
 
                                 </Link>
