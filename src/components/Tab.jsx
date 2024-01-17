@@ -3,7 +3,7 @@ import styles from "./css/tab.module.css"
 import { motion, AnimatePresence } from "framer-motion";
 export const Tab = ({ children }) => {
     return (
-        <div style={{overflow:"hidden", width:"100%"}}>
+        <div style={{ overflow: "hidden", width: "100%" }}>
             {children}
         </div>
     )
@@ -28,7 +28,9 @@ export const TabsContainer = ({ children, tabs }) => {
                                 <motion.div className={styles.underline} layoutId="underline" />
                             ) : null}
                         </li>
+
                     ))}
+                    <li> </li>
                 </ul>
             </nav>
             <main>

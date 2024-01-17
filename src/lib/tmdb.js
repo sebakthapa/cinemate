@@ -25,7 +25,7 @@ export const tmdbImageBaseUrl = "http://image.tmdb.org/t/p/"
 
 
 
-const movieGenres = [// 19
+export const movieGenres = [// 19
 
   {
     "id": 28,
@@ -105,7 +105,7 @@ const movieGenres = [// 19
   }
 ]
 
-const tvGenre = [ //16
+export const tvGenre = [ //16
   {
     "id": 10759,
     "name": "Action & Adventure"

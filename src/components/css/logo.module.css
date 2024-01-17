@@ -13,7 +13,19 @@
 }
 
 .logoText{
-    font-size: 3.2rem;
+    font-size: 3rem;
     font-weight: 700;
     color: rgb(228, 1, 1);
+}
+
+@media (max-width:992px){
+    .logoText{
+        font-size: 2rem;
+    }
+}
+
+@media (max-width:468px){
+    .logoText{
+        font-size: 1.6rem;
+    }
 }

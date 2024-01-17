@@ -3,7 +3,6 @@
     padding: 1rem 0;
     max-width: 100%;
     position: relative;
-
 }
 
 
@@ -18,8 +17,6 @@
     top: 0;
     right: 0;
     pointer-events: none;
-
-
 }
 
 
@@ -47,4 +44,46 @@
 
 .container::-webkit-scrollbar {
     display: none;
+}
+
+@media (max-width:729px) {
+    .container::before {
+        width: 50px;
+        background: linear-gradient(to right, transparent,rgba(0,0,0,.5), rgba(0,0,0,.7));
+    }
+    
+}
+
+@media (max-width:729px) {
+    .container::before {
+        width: 20px;
+        /* border: dotted red; */
+        background: linear-gradient(to right, transparent, rgba(0,0,0,.7));
+        background: transparent;
+    }
+    
+}
+@media (max-width:662px) {
+    .row {
+        /* 0 h orizontal padding cuz' needed for movie details page */
+        padding: 0rem 0;
+    }
+    .rowTitle {
+        margin-bottom: 0;
+        font-size: 1.5rem;
+    }
+    .container {
+        padding: 0rem 0;
+    }
+    
+}
+@media (max-width:479px) {
+    .rowTitle {
+        font-size: 1.2rem;
+        margin-bottom: -1rem;
+    }
+    .container {
+        padding: 0rem 0;
+    }
+    
 }

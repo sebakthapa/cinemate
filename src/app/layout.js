@@ -2,6 +2,8 @@ import ReduxProvider from '@/components/ReduxProvider'
 import './globals.css'
 import { Inter } from 'next/font/google'
 import { websiteName } from '@/lib'
+import { Toaster } from 'react-hot-toast'
+import PageLoader from '@/components/PageLoader'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -19,7 +21,24 @@ export default function RootLayout({ children }) {
       </head>
       <body className={inter.className}>
         <ReduxProvider>
+          <Toaster
+            position="bottom-center"
+            reverseOrder={false}
+            containerClassName=""
+            containerStyle={{}}
+            toastOptions={{
+              className: '',
+              duration: 5000,
+              style: {
+                background: '#111',
+                color: '#ddd',
+              },
+            }}
+          />
+
+          
           {children}
+
         </ReduxProvider>
 
       </body>
