@@ -35,7 +35,7 @@ const useInfiniteScroll = ({ url, data: localData = [], dependencies=[] }) => {
 
             const response = await fetch(`${url}&page=${nextPage}`);
             const newData = await response.json();
-            console.log(newData)
+            // console.log(newData)
 
             if (newData.page == newData.total_pages || newData.data?.length == 0) {
                 setHasMore(false);
