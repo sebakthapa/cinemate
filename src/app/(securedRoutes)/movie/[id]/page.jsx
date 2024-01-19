@@ -30,7 +30,7 @@ const page = async ({ params }) => {
 
   const similarMoviesUrl = `${tmdbBaseUrl}/movie/${id}/similar?language=en-US`;
 
-  console.log(movieData)
+  // console.log(movieData)
   const { adult, title, genres, backdrop_path, poster_path, homepage, original_title, overview, popularity, production_companies, production_countries, release_date, spoken_language, runtime, vote_average, status, tagline, vote_count } = movieData
 
   const { hour, minutes } = minuteToHour(runtime);

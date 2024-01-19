@@ -22,25 +22,25 @@ const MovieDetails = ({ title, production_companies, starrings, tagline, image, 
 
     const videoTypes = [];
 
-    console.log(videos)
+    // console.log(videos)
     videos?.length > 0 && videos.map(({ type }) => !videoTypes.includes(type) && videoTypes.push(type))
-    console.log(videoTypes)
-    console.log("videos", videos)
+    // console.log(videoTypes)
+    // console.log("videos", videos)
     useEffect(() => {
         const media = pathname.includes("tv") ? "tv" : "movie"
         setMediaType(media)
 
     }, [pathname])
-    console.log(pathname.split("/").at(-2))
+    // console.log(pathname.split("/").at(-2))
 
     const handlePlay = async (e) => {
         try {
             if (trailerId) {
                 setTrailerId("")
             } else {
-                console.log(movieId)
+                // console.log(movieId)
                 const id = await movieTrailer(title || null, { id:true })
-                console.log(id)
+                // console.log(id)
                 if (!id) {
                     toast("Sorry! This video is currently unavailable.")
                     e.target.setAttribute("disabled", true);
