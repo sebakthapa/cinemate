@@ -27,7 +27,7 @@ const Row = ({ title, fetchUrl, fetchedData, mediaType }) => {
                 isKid: profile.isKid,
                 currentPage
             })
-            console.log(res)
+            // console.log(res)
 
             if (res.status == 200) {
                 // Check if the current page is the same as the last fetched page
@@ -82,7 +82,7 @@ const Row = ({ title, fetchUrl, fetchedData, mediaType }) => {
                         <div onScroll={handleScroll} className={styles.container}>
                             {
                                 data?.length > 0 && data?.map(({ name, poster_path, id, media_type, ...rest }, idx) => {
-                                    console.log(media_type, mediaType)
+                                    // console.log(media_type, mediaType)
                                     !poster_path && "";
 
                                     return (

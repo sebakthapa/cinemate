@@ -32,6 +32,7 @@ export const POST = async (request) => {
 
 
         if (!result) {
+            console.log("incorrect Password")
             return new NextResponse(JSON.stringify({ message: "Password is incorrect.", fields: ["password"] }), {status:401})
         }
 
@@ -42,7 +43,7 @@ export const POST = async (request) => {
         return NextResponse.json(dataToSend)
 
     } catch (error) {
-        console.log("Error Logging in a user", + error);
+        console.log("Error logging in a user",  error);
         // return new NextResponse(JSON.stringify({ error: "Error occured while creating new user", details: {...error} }))
     }
 

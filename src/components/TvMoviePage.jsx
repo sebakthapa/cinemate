@@ -9,7 +9,7 @@ const TvMoviePage = async ({ type }) => {
         <div>
             {
                 genres.length > 0 && genres.map(({ id, name, ...rest }) => {
-                    console.log("RESTT", {id, name, ...rest})
+                    // console.log("RESTT", {id, name, ...rest})
                     return (    
                         <Row
                             mediaType={type}

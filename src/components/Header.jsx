@@ -62,11 +62,11 @@ function Header() {
             return;
         }
         router.push(`/search/${searchText}`)
-        console.log("Clicked");
+        // console.log("Clicked");
         const filteredSearch = searchText.replaceAll("  ", "")
         if (!filteredSearch || !searchText.replaceAll(" ", "")) return;
 
-        console.log(filteredSearch)
+        // console.log(filteredSearch)
     }
 
 

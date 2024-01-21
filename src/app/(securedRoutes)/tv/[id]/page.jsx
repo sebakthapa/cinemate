@@ -27,7 +27,7 @@ const page = async ({ params }) => {
 
   const similarMoviesUrl = `${tmdbBaseUrl}/tv/${id}/similar?language=en-US`;
 
-  console.log(tvData)
+  //console.log(tvData)
 
   const { adult, name, genres, backdrop_path, poster_path, homepage, original_title, overview, popularity, production_companies,created_by, production_countries, first_air_date, spoken_language, runtime, vote_average, status, tagline, vote_count, seasons, number_of_seasons, number_of_episodes, last_episode_to_air } = tvData
   const { hour, minutes } = minuteToHour(runtime);

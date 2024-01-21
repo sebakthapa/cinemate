@@ -11,7 +11,7 @@ import Link from 'next/link';
 const Search = ({ searchText: searchedText }) => {
     const { data, isLoading, loadMore, isLoadingNewPage, hasMore, error } = useInfiniteScroll({ url: `/api/tmdb/search/${decodeURI(searchedText)}?includeAdult=${true}` })
 
-    console.log(data)
+    // console.log(data)
     const pathname = usePathname()
     const router = useRouter()
 
@@ -19,7 +19,7 @@ const Search = ({ searchText: searchedText }) => {
 
     const handleSearch = async (e) => {
         e.preventDefault();
-        console.log(searchText)
+        // console.log(searchText)
         const filteredText = searchText.replaceAll("  ", "");
         if (filteredText && filteredText != " ") {
             router.push(`/search/${filteredText}`)
@@ -51,7 +51,7 @@ const Search = ({ searchText: searchedText }) => {
                 <div className={styles.cardsContainer}>
                     {
                         data && data.length > 0 && data?.map(({ name, title, id, backdrop_path, overview, media_type, poster_path, genre_ids, popularity, vote_average, release_date, first_air_date, original_language }, idx) => {
-                            console.log(backdrop_path)
+                            // console.log(backdrop_path)
                             let genreIds = genre_ids;
                             return (
                                 <Link href={`/${media_type}/${id}`} key={id} className={styles.card}>
