@@ -30,8 +30,13 @@ function CreateProfile() {
 
 
     useEffect(() => {
-        if (!user?.id)
-            router.push("/")
+        if (!user?.id) {
+            if (user?.emailVerified) {
+                // router.push("/profiles");
+            } else {
+                router.push("/verify-email");
+            }
+        }
     }, [user])
 
     useEffect(() => {

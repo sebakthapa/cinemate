@@ -31,13 +31,16 @@ export const POST = async (request) => {
         const result = await bcrypt.compare(password, existingUser.password);// form pw, db pw
 
 
-
         if (!result) {
             console.log("incorrect Password")
             return new NextResponse(JSON.stringify({ message: "Password is incorrect.", fields: ["password"] }), {status:401})
         }
 
-        return new NextResponse(JSON.stringify({email:existingUser.email, displayName:existingUser.displayName, id:existingUser._id}))
+        console.log("exhisitng user", existingUser)
+        const { password: userPw, ...dataToSend } = existingUser._doc;
+        console.log(dataToSend)
+
+        return NextResponse.json(dataToSend)
 
     } catch (error) {
         console.log("Error logging in a user",  error);

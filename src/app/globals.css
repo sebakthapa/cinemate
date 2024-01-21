@@ -41,6 +41,9 @@
 }
 
 @media (prefers-color-scheme: dark) {
+  body{
+    color: #eee;
+  }
   :root {
     --foreground-rgb: 255, 255, 255;
     --background-start-rgb: 0, 0, 0;
@@ -89,6 +92,8 @@ body {
 
 body {
   color: rgb(var(--foreground-rgb));
+  min-height: 100vh;
+
   background: linear-gradient(
       to bottom,
       transparent,
@@ -129,4 +134,33 @@ a {
 * {
   scrollbar-color:  #222 #333; /* Color of the scrollbar thumb and track */
   scrollbar-width: 5px; /* Width of the scrollbar */
+}
+
+
+button:disabled{
+  cursor: not-allowed !important;
+  position:relative ;
+  opacity: .8 !important;
+}
+
+button:disabled::before{
+  content: "";
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background: white;
+  opacity: .25;
+  pointer-events:all;
+}
+
+
+
+
+button{
+  display:flex;
+  align-items: center;
+  justify-content: center;
+  gap:10px;
 }

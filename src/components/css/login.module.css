@@ -5,7 +5,6 @@
 
 .signin__formContainer {
     display: flex;
-    justify-content: center;
     align-items: center;
     flex-direction: column;
     height: 100vh;
@@ -13,6 +12,7 @@
     overflow: hidden;
     margin-bottom: 30px;
     margin: 1 5vw;
+    margin-top: 1rem;
 
 }
 
@@ -38,13 +38,16 @@
 .signin__inputs {
     margin-top: 30px;
     width: 100%;
-
 }
 
 .signin__inputs>div {
     position: relative;
     margin-bottom: 20px;
     width: 100%;
+}
+
+.signin__inputs>div:last-of-type {
+    margin-bottom: 8px;
 }
 
 
@@ -84,6 +87,17 @@
     left: 1.5rem;
 }
 
+.signin__form .forgotPassword{
+    color:#aaa;
+    font-size: 14px;
+    text-decoration: underline;
+    transition: .1s linear;
+}
+
+.signin__form .forgotPassword:hover{
+    color:#ddd;
+}
+
 .signin__button {
     color: #fff;
     font-size: 1.3rem;
@@ -96,9 +110,10 @@
     font-weight: 600;
     width: 100%;
     margin-top: 30px;
+    gap: 10%;
 }
 
-.signin__button:hover {
+.signin__button:enabled:hover {
     background: rgb(195, 8, 18);
 }
 

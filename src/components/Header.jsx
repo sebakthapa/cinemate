@@ -8,7 +8,8 @@ import { usePathname, useRouter } from 'next/navigation';
 import Logo from './Logo';
 import { logoutProfile } from '@/redux/profileSlice';
 import { MdOutlineMenu } from 'react-icons/md';
-import { motion } from "framer-motion"
+import { sendVerificationEmail } from '@/lib';
+import Spinner from './Spinner';
 
 function Header() {
     const dispatch = useDispatch();
@@ -37,8 +38,14 @@ function Header() {
     }
 
     useEffect(() => {
-        if (!user?.id)
-            router.push("/");
+        if (user?._id) {
+            if (!user?.emailVerified) {
+                sendVerificationEmail({email:user?.email, userId:user?._id})
+                router.replace("/verify-email")
+            }
+        } else {
+            router.replace("/");
+        }
     }, [user])
 
     useEffect(() => {
@@ -91,7 +98,7 @@ function Header() {
 
             {
                 !pathname.includes("search") ? (
-                    <button onClick={() => router.push("/search/")} className={`${styles.searchBtn} ${styles.searchLabel}`} ><FaSearch /></button> 
+                    <button onClick={() => router.push("/search/")} className={`${styles.searchBtn} ${styles.searchLabel}`} ><FaSearch /></button>
                 ) : <span></span>
             }
 
@@ -131,8 +138,22 @@ function Header() {
 
 
                 <div className={styles.header__signout} onClick={handleLogOut} title={`Logout ${profile?.name || "this"} profile`}>
-                    <FaPowerOff className={styles.signoutIcon} />
-                    <p>{isSubmitting ? "Logging Out" : profile?.name}</p>
+                    {
+                        isSubmitting ? (
+                            <>
+                                <Spinner />
+                                Logging Out
+                            </>
+
+                        ) : (
+                            <>
+                                <FaPowerOff className={styles.signoutIcon} />
+                                {profile?.name}
+                            </>
+
+                        )
+
+                    }
                 </div>
             </div>
 

@@ -10,8 +10,7 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 import { setProfile } from "@/redux/allProfilesSlice";
 import { logout } from "@/redux/userSlice";
-
-
+import { sendVerificationEmail } from "@/lib";
 
 
 function Profiles() {
@@ -24,26 +23,35 @@ function Profiles() {
     const [isSubmitting, setIsSubmitting] = useState(false)
 
 
-
     useEffect(() => {
-        if (!user?.id)
-            router.replace("/")
-        else {
-            fetchProfiles();
-        }
+        if (user?._id) {
+            if (!user?.emailVerified) {
+                sendVerificationEmail({ email: user?.email, userId: user?._id })
+                console.log("Moving to /verify-email route")
 
+                router.replace("/verify-email")
+            } else {
+                fetchProfiles();
+            }
+        } else {
+            console.log("Moving to / route")
+            router.replace("/")
+        }
     }, [user])
 
     useEffect(() => {
-        if (profile?.id)
+        if (profile?.id) {
+            console.log("Moving to /home route")
             router.replace("/home")
+        }
+
 
     }, [profile])
 
 
     const fetchProfiles = async () => {
         try {
-            const response = await axios.get(`/api/profile/${user?.id}`);
+            const response = await axios.get(`/api/profile/${user?._id}`);
 
             const data = response.data;
 
@@ -82,7 +90,7 @@ function Profiles() {
                 <h1 className={styles.profiles__title}>Select your profile</h1>
                 <div className={styles.profiles__container}>
                     {allProfiles?.length > 0 && allProfiles.map(({ name, avatar, uid, isKid, hasPin, pin, _id }, index) => {
-                        return  <Profile key={index} name={name} avatar={avatar} uid={uid} id={_id} isKid={isKid} hasPin={hasPin} /> 
+                        return <Profile key={index} name={name} avatar={avatar} uid={uid} id={_id} isKid={isKid} hasPin={hasPin} />
                     })}
 
 

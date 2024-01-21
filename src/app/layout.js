@@ -22,7 +22,7 @@ export default function RootLayout({ children }) {
       <body className={inter.className}>
         <ReduxProvider>
           <Toaster
-            position="bottom-center"
+            position="bottom-right"
             reverseOrder={false}
             containerClassName=""
             containerStyle={{}}
