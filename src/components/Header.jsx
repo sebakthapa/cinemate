@@ -8,8 +8,8 @@ import { usePathname, useRouter } from 'next/navigation';
 import Logo from './Logo';
 import { logoutProfile } from '@/redux/profileSlice';
 import { MdOutlineMenu } from 'react-icons/md';
-import ImSpinner2 from "react-icons/im"
 import { sendVerificationEmail } from '@/lib';
+import Spinner from './Spinner';
 
 function Header() {
     const dispatch = useDispatch();
@@ -141,7 +141,7 @@ function Header() {
                     {
                         isSubmitting ? (
                             <>
-                                <ImSpinner2 />
+                                <Spinner />
                                 Logging Out
                             </>
 

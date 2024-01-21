@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation"
 import axios from "axios"
 import toast from "react-hot-toast"
 
-const page = ({ searchParams }) => {
+const Page = ({ searchParams }) => {
     const router = useRouter();
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
@@ -180,4 +180,4 @@ const page = ({ searchParams }) => {
     )
 }
 
-export default page
+export default Page
