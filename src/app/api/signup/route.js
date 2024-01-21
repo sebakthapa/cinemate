@@ -49,9 +49,11 @@ export const POST = async (request) => {
          }
          const displayName = email.split("@")[0];
          const newUser = new Users({ email, password:hashedPassword, displayName });
-         const savedUser = await newUser.save();
+        const savedUser = await newUser.save();
+        
+        const { password:userPw, ...filteredData } = savedUser._doc;
 
-         return new NextResponse(JSON.stringify({ id: savedUser._id, email: savedUser.email, displayName: savedUser.displayName }))
+         return new NextResponse(JSON.stringify(filteredData))
 
 
 

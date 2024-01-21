@@ -172,7 +172,7 @@
 
 
 
-.header__signout p {
+.header__signout  {
     font-size: 1rem;
     transition: .2s linear;
     font-weight: 700;
@@ -324,7 +324,7 @@
         margin-left: 20px;
     }
 
-    .header__signout p {
+    .header__signout {
         font-size: 12px;
     }
 

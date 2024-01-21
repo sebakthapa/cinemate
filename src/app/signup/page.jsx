@@ -3,16 +3,15 @@ import React, { useEffect, useState } from 'react';
 import styles from "@/components/css/signup.module.css";
 import Banner from '@/components/Banner';
 import Footer from '@/components/Footer';
-import { firebaseAuth } from "@/lib/firebase"
 import Input from '@/components/Input';
-import { browserSessionPersistence, createUserWithEmailAndPassword, onAuthStateChanged, setPersistence } from 'firebase/auth';
-import { useAuthState } from 'react-firebase-hooks/auth';
 import { useDispatch, useSelector } from "react-redux";
 import Link from 'next/link';
 import axios from 'axios';
 import { login } from '@/redux/userSlice';
 import { useRouter } from 'next/navigation';
 import Logo from '@/components/Logo';
+import { sendVerificationEmail } from '@/lib';
+import Spinner from '@/components/Spinner';
 
 
 function Signup({ searchParams }) {
@@ -39,10 +38,15 @@ function Signup({ searchParams }) {
     // 	return state.posts
     // })
 
-    
+
     useEffect(() => {
-        if (user?.id) {
-            router.push("/profiles");
+        if (user?._id) {
+            if (user?.emailVerified) {
+                router.push("/profiles");
+            } else {
+                sendVerificationEmail({ email: user?.email, userId: user?._id })
+                router.push("/verify-email");
+            }
         }
     }, [user])
 
@@ -132,18 +136,30 @@ function Signup({ searchParams }) {
 
     useEffect(() => {
 
-        if (password) {
-            if (password.length < 6) {
-                setPasswordValidation({ status: "invalid", message: "Password must be at least 6 characters long." })
 
-            } else if (!/[a-z]/.test(password)) {
-                setPasswordValidation({ status: "invalid", message: "Password must contain lowercase letter." })
-            } else if (!/[A-Z]/.test(password)) {
-                setPasswordValidation({ status: "invalid", message: "Password must contain uppercase letter." })
-            } else if (!/\d/.test(password)) {
-                setPasswordValidation({ status: "invalid", message: "Password must contain number." })
-            } else if (!/\W/.test(password)) {
-                setPasswordValidation({ status: "invalid", message: "Password must contain symbol." })
+        if (password) {
+            let requiredMsg = "";
+            if (!/[a-z]/.test(password)) {
+                requiredMsg += " Lowercase,"
+
+            }
+            if (!/[A-Z]/.test(password)) {
+                requiredMsg += " Uppercase,"
+
+            }
+            if (!/\d/.test(password)) {
+                requiredMsg += " Digit,"
+
+            }
+            if (!/\W/.test(password)) {
+                requiredMsg += " Symbol,"
+            }
+            if (password.length < 6) {
+                requiredMsg += " Min 6 characters"
+            }
+
+            if (password.length < 6 || !/[a-z]/.test(password) || !/[A-Z]/.test(password) || !/\d/.test(password) || !/\W/.test(password)) {
+                setPasswordValidation({ status: "invalid", message: `Required:${requiredMsg}` })
             } else {
                 setPasswordValidation({ status: "valid", message: "" })
             }
@@ -172,7 +188,7 @@ function Signup({ searchParams }) {
         <>
             <div className={styles.signup}>
                 <div className={styles.signup__logo}>
-                    <Link href="/"> <Logo /> </Link>
+                     <Logo link={"/"} />
                 </div>
                 <Banner imageHeight="100vh" style={{ height: "100vh", overflow: "hidden" }} />
                 <div className={styles.signup__formContainer}>
@@ -184,7 +200,7 @@ function Signup({ searchParams }) {
                             <Input value={password} setInput={setPassword} type="password" label="Create password" validation={passwordValidation} />
                             <Input value={confirmPassword} type="password" setInput={setConfirmPassword} label="Confirm password" validation={confirmPasswordValidation} />
                         </div>
-                        <button className={styles.signup__button} onClick={handleSignup}>{isSubmitting ? "Signing in" : "Sign up"}</button>
+                        <button disabled={isSubmitting} className={styles.signup__button} onClick={handleSignup}>{isSubmitting ? <Spinner /> : "Sign up"}</button>
 
                         <div className={styles.signup__switch}>
                             <span className={styles.message}>Already registered? </span> <Link href="/login" className={styles.link} >Log In</Link>
@@ -192,7 +208,7 @@ function Signup({ searchParams }) {
 
                         <div className={styles.signup__recaptchaMessage}>
                             <p className={styles.message}>
-                               {` This page is protected by Google reCAPTCHA to ensure you're not a bot.`}
+                                {` This page is protected by Google reCAPTCHA to ensure you're not a bot.`}
                             </p>
                             {
                                 showMoreRecaptchaMessage ? (

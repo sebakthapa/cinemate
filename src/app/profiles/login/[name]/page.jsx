@@ -29,8 +29,13 @@ const LoginProfile = (props) => {
   }, [allProfiles, name])
 
   useEffect(() => {
-    if (!user?.id)
-      router.replace("/")
+    if (!user?.id) {
+      if (user?.emailVerified) {
+          router.push("/profiles");
+      } else {
+          router.push("/verify-email");
+      }
+  }
   }, [user])
 
   useEffect(() => {

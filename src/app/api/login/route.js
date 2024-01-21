@@ -31,15 +31,18 @@ export const POST = async (request) => {
         const result = await bcrypt.compare(password, existingUser.password);// form pw, db pw
 
 
-
         if (!result) {
             return new NextResponse(JSON.stringify({ message: "Password is incorrect.", fields: ["password"] }), {status:401})
         }
 
-        return new NextResponse(JSON.stringify({email:existingUser.email, displayName:existingUser.displayName, id:existingUser._id}))
+        console.log("exhisitng user", existingUser)
+        const { password: userPw, ...dataToSend } = existingUser._doc;
+        console.log(dataToSend)
+
+        return NextResponse.json(dataToSend)
 
     } catch (error) {
-        console.log("Error Creating new user", + error);
+        console.log("Error Logging in a user", + error);
         // return new NextResponse(JSON.stringify({ error: "Error occured while creating new user", details: {...error} }))
     }
 

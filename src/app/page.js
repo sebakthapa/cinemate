@@ -10,7 +10,7 @@ import styles from "./page.module.css"
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Logo from '@/components/Logo';
-import { websiteName } from '@/lib';
+import { sendVerificationEmail, websiteName } from '@/lib';
 
 
 
@@ -22,8 +22,18 @@ function GetStarted() {
 
 
     useEffect(() => {
-        if (user?.id)
-            router.push("/home")
+        if (user?._id) {
+            if (user?.emailVerified) {
+            console.log("Moving to / route")
+
+                router.replace("/home")
+            } else {
+                sendVerificationEmail({ email: user?.email, userId: user?._id })
+            console.log("Moving to /verify-email route")
+                
+                router.replace("/verify-email")
+            }
+        }
     }, [user])
 
 
@@ -89,14 +99,14 @@ function GetStarted() {
 
     return (
         <>
-            {
-                !user && (
+            {/* { */}
+                {/* !user && ( */}
 
                     <div className={styles.signup} >
 
                         <div className={styles.signup__header}>
                             <div className={styles.signup__logo}>
-                                <Logo />
+                                <Logo  link={"/"}/>
                             </div>
                             <div className={styles.signup__headerSwitch}>
                                 <Link href="/login" >Log In</Link>
@@ -151,9 +161,8 @@ function GetStarted() {
 
                         <Footer />
                     </div >
-
-                )
-            }
+                {/* ) */}
+            {/* } */}
         </>
 
     )

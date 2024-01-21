@@ -1,4 +1,3 @@
-import React, { useEffect } from 'react';
 import styles from "./css/input.module.css"
 
 function Input({ type, value, validation, label, setInput, ...props }) {

@@ -1,5 +1,4 @@
 import styles from "./css/home.module.css"
-import Header from '@/components/Header'
 import Row from './Row'
 import { requests, tmdbBaseUrl } from "@/lib/tmdb"
 

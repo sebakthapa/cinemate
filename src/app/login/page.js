@@ -5,24 +5,20 @@ import styles from "@/components/css/login.module.css";
 import Banner from '@/components/Banner';
 import Footer from '@/components/Footer';
 import Input from '@/components/Input';
-import { browserSessionPersistence, onAuthStateChanged, setPersistence, signInWithEmailAndPassword } from 'firebase/auth';
-import { firebaseAuth } from '@/lib/firebase';
-import { useAuthState } from 'react-firebase-hooks/auth';
 import { useDispatch, useSelector } from 'react-redux';
 import Link from 'next/link';
 import axios from 'axios';
 import { login } from '@/redux/userSlice';
 import { useRouter } from 'next/navigation';
 import Logo from '@/components/Logo';
+import { sendVerificationEmail, websiteName } from '@/lib';
+import Spinner from '@/components/Spinner';
 
 function Login() {
 
     const dispatch = useDispatch();
-
     const user = useSelector((state) => state.user);
     const router = useRouter();
-
-
 
     // const [isLogged, setIsLogged] = useState(useSelector(state => state.user.length > 0 ? true : false))
     const [email, setEmail] = useState("");
@@ -35,39 +31,30 @@ function Login() {
 
     const [isSubmitting, setIsSubmitting] = useState(false)
 
-   
+
 
     useEffect(() => {
-        if (user?.id) {
-            router.push("/profiles");
+        if (user?._id) {
+            if (user?.emailVerified) {
+                console.log("Moving to /profiles route")
+
+                router.replace("/profiles");
+            } else {
+                sendVerificationEmail({ email: user?.email, userId: user?._id })
+                console.log("Moving to /verify-email route")
+
+                router.replace("/verify-email")
+            }
         }
     }, [user])
 
 
     useEffect(() => {
-        if (email) {
-            if (/^\w+([-]?\w+)*@\w+([-]?\w+)*(\.\w{2,3})+$/.test(email)) {
-                setEmailValidation({ status: "hidden", message: "" })
-            } else {
-
-                setEmailValidation({ status: "invalid", message: "Please enter a email you registered" })
-            }
-        } else {
-            setEmailValidation({ status: "hidden" })
-        }
+        setEmailValidation({ status: "hidden" })
     }, [email])
 
     useEffect(() => {
-        if (password) {
-            if (/(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})/.test(password)) {
-                setPasswordValidation({ status: "hidden", message: "" })
-
-            } else {
-                setPasswordValidation({ status: "invalid", message: "Please enter a password you registered" })
-            }
-        } else {
-            setPasswordValidation({ status: "hidden" })
-        }
+        setPasswordValidation({ status: "hidden" })
 
     }, [password])
 
@@ -78,7 +65,9 @@ function Login() {
     // }, [])
 
 
-    const handleSignIn = async () => {
+    const handleSignIn = async (e) => {
+        e.preventDefault();
+
         if (!email) {
             setEmailValidation({ status: "invalid", message: "Please enter your email." })
         }
@@ -108,6 +97,7 @@ function Login() {
             const data = { email, password }
             const response = await axios.post("/api/login", data)
             if (response.status == 200) {
+                console.log(response, response.data)
                 const userData = response.data;
                 dispatch(login(userData))
             }
@@ -133,7 +123,7 @@ function Login() {
             }
 
         } finally {
-            setIsSubmitting(false)
+            setIsSubmitting(false);
         }
     }
 
@@ -145,25 +135,27 @@ function Login() {
         <>
             <div className={styles.signin}>
                 <div className={styles.signin__logo}>
-                    <Link href="/"><Logo /></Link>
+                    <Logo link={"/"} />
                 </div>
                 <Banner imageHeight="100vh" style={{ height: "100vh", overflow: "hidden" }} />
                 <div className={styles.signin__formContainer}>
 
-                    <div className={styles.signin__form}>
+                    <form className={styles.signin__form} onSubmit={handleSignIn}>
                         <h2 className={styles.signin__title}>Log In</h2>
                         <div className={styles.signin__inputs}>
                             <Input value={email} setInput={setEmail} type="text" label="Email address" validation={emailValidation} />
-                            <Input value={password} setInput={setPassword} type="password" label="Your password" validation={passwordValidation} />
+                            <Input value={password} setInput={setPassword} type="password" label="Password" validation={passwordValidation} />
+                            <Link className={styles.forgotPassword} href="/reset-password">Forgot Password</Link>
                         </div>
-                        <button className={styles.signin__button} onClick={handleSignIn}>{isSubmitting ? "Logging In" : "Log In"}</button>
+                        <button disabled={isSubmitting} type='submit' className={styles.signin__button}>
+                            {isSubmitting ?<Spinner />: "Log In"}</button>
                         <div className={styles.signin__checkbox}>
                             <input type="checkbox" value="" id="rememberMeCheckbox" onChange={() => setRememberMe(!rememberMe)} checked={rememberMe} />
                             <label htmlFor="rememberMeCheckbox">Remember me</label>
                         </div>
 
                         <div className={styles.signin__switch}>
-                            <span className={styles.message}>New to Netflix? </span> <Link href="signup" className={styles.link} >Register now</Link>
+                            <span className={styles.message}>New to {websiteName }? </span> <Link href="signup" className={styles.link} >Register now</Link>
                         </div>
 
                         <div className={styles.signin__recaptchaMessage}>
@@ -185,7 +177,7 @@ function Login() {
                         </div>
 
 
-                    </div>
+                    </form>
                 </div>
 
 
