@@ -26,10 +26,9 @@ const Page = ({ searchParams }) => {
             const res = await axios.post("/api/passwordReset", {
                 email
             });
-            console.log(res)
             if (res.status == 200) {
                 router.replace("/login")
-                toast.success("Email sent with password reset instruction.")
+                toast.success("Email sent with password reset instruction.", {duration:10000})
             }
 
 

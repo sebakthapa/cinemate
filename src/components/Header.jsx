@@ -34,13 +34,12 @@ function Header() {
         setIsSubmitting(true)
         dispatch(logoutProfile())
         router.push("/profiles");
-        setIsSubmitting(false)
     }
 
     useEffect(() => {
         if (user?._id) {
             if (!user?.emailVerified) {
-                sendVerificationEmail({email:user?.email, userId:user?._id})
+                sendVerificationEmail({ email: user?.email, userId: user?._id })
                 router.replace("/verify-email")
             }
         } else {
@@ -109,20 +108,20 @@ function Header() {
                     !pathname.includes("search") && (
                         <form
                             onSubmit={handleSearch}
-                            className={styles.header__search}
+                            className={`${styles.header__search} ${styles.contractedSearch}`}
                         >
                             <input
                                 autoComplete="off"
-                                onFocus={(e) => {
-                                    const elem = e.target.parentElement;
-                                    elem.style.maxWidth = "260px";
-                                    elem.style.boxShadow = "-10px -20px 15px 15px #000000dd"
-                                }}
-                                onBlur={(e) => {
-                                    const elem = e.target.parentElement;
-                                    elem.style.maxWidth = "120px";
-                                    elem.style.boxShadow = "none"
-                                }}
+                                // onFocus={(e) => {
+                                //     const elem = document.querySelector(styles.contractedSearch);
+                                //     elem.style.maxWidth = "260px";
+                                //     elem.style.boxShadow = "-10px -20px 15px 15px #000000dd"
+                                // }}
+                                // onBlur={(e) => {
+                                //     const elem = document.querySelector(styles.contractedSearch);
+                                //     elem.style.maxWidth = "150px";
+                                //     elem.style.boxShadow = "none"
+                                // }}
                                 id="search"
                                 placeholder='Search...'
                                 value={searchText}
@@ -138,22 +137,8 @@ function Header() {
 
 
                 <div className={styles.header__signout} onClick={handleLogOut} title={`Logout ${profile?.name || "this"} profile`}>
-                    {
-                        isSubmitting ? (
-                            <>
-                                <Spinner />
-                                Logging Out
-                            </>
-
-                        ) : (
-                            <>
-                                <FaPowerOff className={styles.signoutIcon} />
-                                {profile?.name}
-                            </>
-
-                        )
-
-                    }
+                    {isSubmitting ? <Spinner /> : <FaPowerOff className={styles.signoutIcon} />}
+                    {profile?.name}
                 </div>
             </div>
 

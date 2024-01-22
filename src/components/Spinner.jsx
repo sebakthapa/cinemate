@@ -4,7 +4,7 @@ import styles from "./css/spinner.module.css"
 const Spinner = () => {
     return (
         <span className={styles.spinner}>
-            <ImSpinner2 className={styles.icon} />
+            <ImSpinner2  className={styles.icon} />
         </span>
     )
 }
