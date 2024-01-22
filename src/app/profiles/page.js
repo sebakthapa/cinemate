@@ -11,6 +11,7 @@ import axios from "axios";
 import { setProfile } from "@/redux/allProfilesSlice";
 import { logout } from "@/redux/userSlice";
 import { sendVerificationEmail } from "@/lib";
+import Spinner from "@/components/Spinner";
 
 
 function Profiles() {
@@ -52,11 +53,8 @@ function Profiles() {
     const fetchProfiles = async () => {
         try {
             const response = await axios.get(`/api/profile/${user?._id}`);
-
             const data = response.data;
-
             dispatch(setProfile(data))
-
         } catch (error) {
             console.log(error)
         }
@@ -67,7 +65,6 @@ function Profiles() {
         setIsSubmitting(true)
         dispatch(logout());
         dispatch(setProfile([]))
-        setIsSubmitting(false)
     }
 
 
@@ -80,7 +77,7 @@ function Profiles() {
                         <button title="This option will be available soon">Manage Profile</button>
                     </div>
                     <div className={styles.profile__signoutBtn} onClick={handleSignout} title="Sign Out from this user">
-                        <FaPowerOff />
+                        {isSubmitting ? <Spinner /> : <FaPowerOff />}
                         <p>  {isSubmitting ? "Signing Out" : "Sign Out"}</p>
                     </div>
                 </div>
@@ -97,7 +94,7 @@ function Profiles() {
                     {allProfiles?.length < 3 && (
 
                         <div className={styles.profiles__add} style={{ opacity: ".5" }}>
-                            <Profile type="addProfile" name="Add Profile" avatar="/addProfile.jpg" />
+                            <Profile type="addProfile" name="Add Profile" avatar="/addprofile.jpg" />
                         </div>
                     )
                     }

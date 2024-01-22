@@ -6,7 +6,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
 import { loginProfile } from '@/redux/profileSlice';
-import Link from 'next/link';
+import Spinner from '@/components/Spinner';
+import { IoExitOutline } from 'react-icons/io5';
+import toast from 'react-hot-toast';
 
 const LoginProfile = (props) => {
   const dispatch = useDispatch();
@@ -16,7 +18,7 @@ const LoginProfile = (props) => {
   const allProfiles = useSelector((state) => state.allProfiles)
   const user = useSelector((state) => state.user)
   const profile = useSelector((state) => state.profile)
-
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
 
 
@@ -29,13 +31,13 @@ const LoginProfile = (props) => {
   }, [allProfiles, name])
 
   useEffect(() => {
-    if (!user?.id) {
-      if (user?.emailVerified) {
-          router.push("/profiles");
-      } else {
-          router.push("/verify-email");
+    if (!user?._id) {
+      router.push("/")
+    } else {
+      if (!user?.emailVerified) {
+        router.push("/verify-email");
       }
-  }
+    }
   }, [user])
 
   useEffect(() => {
@@ -51,38 +53,16 @@ const LoginProfile = (props) => {
 
 
 
-
-
-  const handleChange = (e) => {
-    const next = e.target.nextElementSibling;
-    const prev = e.target.previousElementSibling;
-    if (e.target.value) {
-      next && next.focus();
-
-    } else {
-      prev && prev.focus()
-    }
-
-
-  }
-
-  const handleInput = (e) => {
-    if (e.keyCode === 8) {
-      if (!e.target.value) {
-        const prev = e.target.previousElementSibling;
-        prev && prev.focus()
-      }
-
-    }
-  }
-
   const profileLogin = async (pin) => {
     try {
-      const response = await axios.post(`/api/profile/${user.id}/login/${name}`, { pin, uid: user.id })
-
+      setIsSubmitting(true)
+      const response = await axios.post(`/api/profile/${user.id}/login/${name}`, { pin, uid: user?._id })
+      console.log(response)
       if (response.status == 200) {
         const profileData = response.data;
         dispatch(loginProfile(profileData))
+      } else {
+        toast.error("Unexpected error occured!")
       }
 
     } catch (error) {
@@ -95,6 +75,7 @@ const LoginProfile = (props) => {
               resetInput()
               break;
             default:
+              console.log(error)
               break;
           }
         })
@@ -102,7 +83,10 @@ const LoginProfile = (props) => {
         console.log("Error occured while sending userData to server")
         console.log(error)
       }
+    } finally {
+      setIsSubmitting(false)
     }
+
   }
 
   useEffect(() => {
@@ -129,8 +113,41 @@ const LoginProfile = (props) => {
     setInput2("")
     setInput3("")
     setInput4("")
-    document.querySelector("input").focus()
+    document.querySelector("#firstInput").focus()
   }
+
+  const handlePinEnter = (e, setInput) => {
+    const next = e.target.nextElementSibling;
+    if (/^\d+$/.test(e.target.value)) {
+      console.log("validation passed")
+      setInput(e.target.value);
+      next && next.focus()
+    }
+  }
+
+
+  const handleBackspacePress = (e, setInput) => {
+    // console.log(e)
+    // console.log(eval(e.currentTarget.getAttribute("data-change-function")));
+    console.log(e.currentTarget)
+    console.log(e.currentTarget.previousElementSibling)
+
+    const prev = e.target.previousElementSibling;
+    const current = e.target;
+    if (e.code == "Backspace") {
+      if (!current.value && prev) {
+        prev.focus();
+        prev.value = "";
+        eval(e.currentTarget.previousElementSibling.getAttribute("data-change-function"))("")
+      } else {
+        setInput("");
+      }
+    } else {
+      return;
+    }
+  }
+
+
   return (
     <div className={styles.loginProfile} >
 
@@ -139,15 +156,52 @@ const LoginProfile = (props) => {
 
         <h1 className={styles.loginProfile__title}>Enter your PIN</h1>
         <div className={styles.loginProfile__inputContainer}>
-          <input required maxLength="1" type="password" value={input1} onKeyDown={handleInput} onChange={(e) => { setInput1(e.target.value); handleChange(e) }} autoFocus />
-          <input required maxLength="1" type="password" value={input2} onKeyDown={handleInput} onChange={(e) => { setInput2(e.target.value); handleChange(e) }} />
-          <input required maxLength="1" type="password" value={input3} onKeyDown={handleInput} onChange={(e) => { setInput3(e.target.value); handleChange(e) }} />
-          <input required maxLength="1" type="password" value={input4} onKeyDown={handleInput} onChange={(e) => { setInput4(e.target.value); handleChange(e) }} />
+          <input required maxLength="1" type="password" value={input1}
+            data-change-function={"setInput1"}
+            onKeyDown={(e) => handleBackspacePress(e, setInput1)}
+            onChange={(e) => {
+              handlePinEnter(e, setInput1);
+            }}
+            autoFocus
+            id='firstInput'
+          />
+
+          <input required maxLength="1" type="password"
+            data-change-function={"setInput2"}
+            value={input2}
+            onKeyDown={(e) => handleBackspacePress(e, setInput2)}
+            onChange={(e) => {
+              handlePinEnter(e, setInput2);
+            }}
+          />
+
+          <input required maxLength="1" type="password"
+            data-change-function={"setInput3"}
+            value={input3}
+            onKeyDown={(e) => handleBackspacePress(e, setInput3)}
+            onChange={(e) => {
+              handlePinEnter(e, setInput3);
+            }} />
+
+          <input required maxLength="1" type="password"
+            data-change-function={"setInput4"}
+            onKeyDown={(e) => handleBackspacePress(e, setInput4)}
+            value={input4}
+            onChange={(e) => {
+              handlePinEnter(e, setInput4);
+            }} />
         </div>
         <p className={styles.loginProfile__error}>
           {error}
         </p>
-        <Link className={styles.loginProfile__button} href="/profiles">Back</Link>
+
+
+        <button onClick={() => router.push("/profiles")} className={styles.loginProfile__button} disabled={isSubmitting} >
+          {
+            isSubmitting ? <span style={{ color: "black" }}><Spinner /></span> : <> <IoExitOutline fontSize={"1.5rem"} /> <span style={{ fontSize: "1.1rem" }} >Back</span> </>
+          }
+        </button>
+
       </div>
 
 

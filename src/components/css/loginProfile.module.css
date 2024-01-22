@@ -54,13 +54,18 @@
 
 .loginProfile__button{
     padding:10px;
-    background:red;
+    background:rgb(226, 0, 0);
     margin-top: 30px;
     border-radius: 3px;
     transition: .3s linear;
+    border:none;
+    cursor:pointer;
+    min-width: 5rem;
+    color:#fff;
+    padding: 10px 1.5rem;
 }
 
-.loginProfile__button:hover{
+.loginProfile__button:enabled:hover{
     background-color: rgb(201, 11, 11);
 }
 

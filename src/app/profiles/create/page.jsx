@@ -2,14 +2,15 @@
 import { useEffect, useState } from 'react';
 import styles from "@/components/css/createProfile.module.css"
 import Input from '@/components/Input';
-import {  getAvatarSVG } from "@/lib"
+import { getAvatarSVG } from "@/lib"
 import { useDispatch, useSelector } from "react-redux";
 import Link from 'next/link';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import { loginProfile } from '@/redux/profileSlice';
-
-
+import Spinner from '@/components/Spinner';
+import { MdCheckBox, MdKeyboardArrowLeft, MdKeyboardArrowRight, MdOutlineCheckBoxOutlineBlank } from 'react-icons/md';
+import {CiUser} from "react-icons/ci"
 
 
 function CreateProfile() {
@@ -17,7 +18,7 @@ function CreateProfile() {
     const dispatch = useDispatch();
     const router = useRouter();
 
-
+    const prefetchAvatarlength = 3;
 
     const { allProfiles, user, profile } = useSelector(({ allProfiles, user, profile }) => {
         return {
@@ -28,12 +29,11 @@ function CreateProfile() {
     })
 
 
-
     useEffect(() => {
-        if (!user?.id) {
-            if (user?.emailVerified) {
-                // router.push("/profiles");
-            } else {
+        if (!user?._id) {
+            router.replace("/")
+        } else {
+            if (!user?.emailVerified) {
                 router.push("/verify-email");
             }
         }
@@ -53,7 +53,10 @@ function CreateProfile() {
     const [pin, setPin] = useState("");
     const [pinNeeded, setPinNeeded] = useState(true);
 
-    const [avatarSVG, setAvatarSVG] = useState(null)
+    const [avatarCollection, setAvatarCollection] = useState([])
+    const [avatarIndex, setAvatarIndex] = useState(0)
+
+    const [loadingAvatar, setLoadingAvatar] = useState(false)
 
 
 
@@ -77,9 +80,9 @@ function CreateProfile() {
                     let data = {
                         name,
                         isKid: kid,
-                        avatar: avatarSVG,
+                        avatar: avatarCollection[avatarIndex],
                         hasPin: pinNeeded,
-                        pin:pin,
+                        pin: pin,
                     };
                     // pinNeeded && (data.pin = pin);
                     const response = await axios.post(`/api/profile/${user.id}`, data)
@@ -159,23 +162,45 @@ function CreateProfile() {
         }
     }, [pin])
 
-    const generateSVG = async (text) => {
-        if (nameValidation.status == "valid") {
-            const svg = await getAvatarSVG(text && text)
-            setAvatarSVG(svg)
+    const nextAvatar = async () => {
+        if (avatarCollection[avatarIndex + 1 + prefetchAvatarlength]) {
+            setAvatarIndex(prev => prev + 1)
+        } else {
+            setAvatarIndex(prev => prev + 1)
+            const svg = await getAvatarSVG()
+            if (svg) {
+                setAvatarCollection((prev) => [...prev, svg]);
+            }
         }
     }
 
+    const prevAvatar = () => {
+        if (avatarIndex > 0) {
+            setAvatarIndex(prev => prev - 1)
+        }
+    }
+
+
     const handleNameBlur = async (e) => {
+
         const name = e.target.value;
         if (!name) {
             return;
         }
-         generateSVG(name)
+        setLoadingAvatar(true)
+
+        // fetch 4 avatars (3 extra as a queue) 
+        for (let i = 0; i < 1 + prefetchAvatarlength; i++) {
+            const svg = await getAvatarSVG(i == 0 && name)
+            console.log(svg)
+            if (svg) {
+                i == 0 && setLoadingAvatar(false)
+                setAvatarCollection(prev => [...prev, svg]);
+                console.log(avatarCollection)
+            }
+        }
     }
 
-
-   
 
 
     return (
@@ -192,33 +217,48 @@ function CreateProfile() {
                 </div>
 
                 <div className={styles.createProfile__form}>
-                    <div className={styles.createProfile__image} style={{ border: (name.length < 3 ? "2px solid gray" : "none"), cursor: (name.length < 3 ? "default" : "pointer") }} onClick={() => generateSVG()}>
+                    <div className={styles.createProfile__image} style={{ border: (avatarCollection.length == 0 ? "2px solid rgba(255,255,255,.2)" : "none"), cursor: (name.length < 3 ? "default" : "pointer") }} >
+
+                        <button onClick={prevAvatar} style={{ display: (avatarCollection.length > 1 && avatarIndex > 0) ? "block" : "none" }} title='Previous avatar' className={styles.prev}> <MdKeyboardArrowLeft /> </button>
+                        <button style={{ display: (avatarCollection.length >= 1 && avatarIndex < avatarCollection.length) ? "block" : "none" }} onClick={nextAvatar} title='Next avatar' className={styles.next}> <MdKeyboardArrowRight /> </button>
                         {
-                            name.length >= 3 ? (
+                            (avatarCollection.length > 0) ? (
                                 <>
-                                    <div className={styles.avatarContainer} dangerouslySetInnerHTML={{ __html: avatarSVG }}>
-                                    </div>
-                                    <p style={{ textAlign: "center" }}>Click to generate random avatar</p>
+                                    {/* avatar is svg and settig svg contents inside div */}
+                                    <div className={styles.avatarContainer} dangerouslySetInnerHTML={{ __html: avatarCollection[avatarIndex] }} />
+
                                 </>
-                            ) :
-                                <p style={{ "textAlign": "center" }} >Enter name to generate avatar</p>
+                            ) : (
+                                <>
+                                    {
+                                        loadingAvatar ? (
+                                            <Spinner />
+                                        ) : (
+                                            <CiUser fontSize={"10rem"} color='#444' />
+                                        )
+                                    }
+
+                                </>
+                            )
                         }
-
-
                     </div>
+                    {
+                        avatarCollection.length == 0 && (
+                            <p style={{ "textAlign": "center", marginTop:"-3.5rem", color:"#888" }} >Enter name to generate avatar</p>
+                        )
+                    }
                     <div className={styles.createProfile__input}>
                         <div>
                             <Input type="text" setInput={setName} value={name} label="Profile name" validation={nameValidation} onBlur={handleNameBlur} />
-                            <div className={styles.createProfile__checkbox}>
-                                <input type="checkbox" value="" id="kidCheckbox" onChange={() => { setKid((prev) => !prev) }} />
-                                <label htmlFor="kidCheckbox">Kid?</label>
-                            </div>
-
+                        </div>
+                        <div onClick={() => setKid(prev => !prev)} className={`${styles.createProfile__checkbox} ${styles.isKid}`}>
+                            {!kid ? <MdOutlineCheckBoxOutlineBlank fontSize={"1.1rem"} /> : <MdCheckBox fontSize={"1.1rem"} />}
+                            <label htmlFor="kidCheckbox">This profile is for Kid.</label>
                         </div>
                         <div style={{ opacity: pinNeeded ? "1" : ".7" }} >
                             <Input type="password" setInput={setPin} value={pinNeeded ? pin : ""} label="4 digits PIN" validation={pinValidation} disabled={!pinNeeded} maxLength="4" />
-                            <div className={styles.createProfile__checkbox}>
-                                <input type="checkbox" value="" id="pinCheckbox" onChange={() => { setPinNeeded(!pinNeeded); setPin("") }} />
+                            <div onClick={() => setPinNeeded(prev => !prev)} className={styles.createProfile__checkbox}>
+                                {pinNeeded ? <MdOutlineCheckBoxOutlineBlank fontSize={"1.1rem"} /> : <MdCheckBox fontSize={"1.1rem"} />}
                                 <label htmlFor="pinCheckbox">Do not set PIN for this profile.</label>
                             </div>
 
@@ -229,12 +269,12 @@ function CreateProfile() {
 
                 </div>
                 <div className={styles.createProfile__buttons}>
-                    <button onClick={handleClick}>{isSubmitting ? "Creating" : "Create"}</button>
+                    <button disabled={isSubmitting} onClick={handleClick}>{isSubmitting ? <Spinner /> : "Create"}</button>
                     <button><Link href="/profiles">Cancel</Link></button>
                 </div>
             </div>
 
-        </div>
+        </div >
     )
 }
 

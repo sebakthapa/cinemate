@@ -4,24 +4,102 @@
     align-items: center;
     flex-direction: column;
     width: fit-content;
+    transition: .4s ease-in-out;
+    border: 2px solid #333;
+    border-radius: 1px;
+    padding: 1rem;
+    position: relative;
+}
+
+
+
+.profile__image{
     cursor: pointer;
-    opacity: .9;
-    transition: .2s ease-in-out;
+
 }
 
 .profile__text{
     text-align: center;
+    margin-top: 10px;
+    cursor: pointer;
 }
 
 .profile:hover {
-    opacity: 1;
-    transform: translateY(-5px);
+    border: 2px solid #555;
+
 }
 
-.profile:active {
-    opacity: 1;
-    transform: scale(.99) translateY(-5px);
-    filter: brightness(70%)
+
+.menu{
+    position: absolute;
+    left:0;
+    top:0;
+    margin: 5px 3px;
+}
+
+.menuTrigger{
+    cursor: pointer;
+    display: flex;
+    justify-items: center;
+    align-items: center;
+    transition: .2s ease;
+    color:#ccc;
+    border-radius: 50%;
+    padding: .3rem;
+    border: none;
+    background: transparent;
+}
+
+.menuTrigger svg{
+    font-size: 1.1rem;
+}
+
+.menuTrigger:hover,
+.menuTrigger:focus{
+    background: #333;
+    color:#fff;
+}
+
+.menuTrigger:focus ~ .menuOptions{
+    display:block;
+}
+
+.menuOptions{
+    position: absolute;
+    top:1.5rem;
+    left:.1rem;
+    padding-top: .4rem;
+    display: none;
+}
+
+.menuOptions ul{
+    background: #222;
+    border: 2px solid #444;
+    border-radius: 5px;
+
+}
+
+.menuOptions li{
+    list-style-type: none;
+    padding: .6rem 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: .8rem;
+    border-bottom: 1px solid #333;
+    font-weight: 600;
+}
+
+.menuOptions li:last-of-type{
+    border:none;
+}
+.menuOptions li svg{
+    font-weight: 800;
+    font-size: 1.3rem;
+}
+
+.menuOptions li:hover{
+    background: #333;
+    cursor: pointer;
 }
 
 

@@ -51,6 +51,7 @@ export const POST = async (req) => {
         }).save();
 
         const { origin: host, host: webname } = new URL(req.url);
+        
         const link = `${host}/reset-password?step=create-new-password&token=${resetToken}&email=${email}`;
         const html = passwordResetHtml({ url: link, host });
         const text = passwordResetText({ url: link, host });
@@ -58,11 +59,10 @@ export const POST = async (req) => {
 
         const emailRes = await sendEmail({ subject, email, text, html })
 
-
         return NextResponse.json({ link, message: "Password reset instruction sent!" }, { status: 200 })
 
     } catch (error) {
-        console.log("error while resetting password")
+        console.log("error while resetting password", error)
         throw error
     }
 }
