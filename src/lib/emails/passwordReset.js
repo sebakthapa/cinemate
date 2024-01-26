@@ -184,7 +184,7 @@ export const passwordResetHtml = (params) => {
                                                             <td>
                                                                 <a href="${host}" class="text-logo "
                                                                     style="text-decoration: none; font-weight: 900; font-size: 25px;">
-                                                                    CHITRAKALA
+                                                                    CINEMATE
                                                                 </a>
                                                             </td>
                                                             <td align="right"> &nbsp;</i>
@@ -214,7 +214,7 @@ export const passwordResetHtml = (params) => {
                                                                 <p class="dark-text-gray-50"
                                                                     style="margin: 0; font-size: 16px; line-height: 26px; color: #191847">
                                                                     You recently requested to reset your password for your
-                                                                    Chitrakala account. Use the button below to reset your
+                                                                    Cinemate account. Use the button below to reset your
                                                                     password. <br />
                                                                 </p>
                                                             </td>
@@ -268,7 +268,7 @@ export const passwordResetHtml = (params) => {
                                 <td style="padding-left: 40px; padding-right: 40px">
                                     <a href="${host}" class="dark-text-gray-50"
                                         style="text-decoration: none; font-weight: 700; color: #767E9D">
-                                        CHITRAKALA
+                                        CINEMATE
                                     </a>
                                     <div style="line-height: 16px">&zwnj;</div>
                                     <table class="sm-w-full" style="font-size: 12px; line-height: 16px" cellpadding="0"
@@ -381,7 +381,7 @@ export const passwordResetHtml = (params) => {
                                     </table>
                                     <div style="line-height: 16px">&zwnj;</div>
                                     <p style="margin: 0; font-size: 12px; line-height: 16px">
-                                        This message was sent by chitrakala.com for your email verification. You won't
+                                        This message was sent by cinemate.com for your email verification. You won't
                                         receive it frequently.
     
                                     </p>

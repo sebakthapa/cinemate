@@ -74,8 +74,6 @@ export const POST = async (req) => {
             return NextResponse.json({ error:true, message: "Unable to send verification email!" }, { status: 503 })
         }
 
-
-
     } catch (error) {
         console.log("error while Sending Verification email")
         throw error
