@@ -10,6 +10,7 @@ import Image from "next/image"
 import { sendVerificationEmail } from "@/lib"
 import toast from "react-hot-toast"
 import axios from "axios"
+import Spinner from "@/components/Spinner"
 
 
 const Page = ({ searchParams }) => {
@@ -29,17 +30,19 @@ const Page = ({ searchParams }) => {
     if (user?.id && user?.email) {
       sendVerificationEmail({ email: user?.email, userId: user?.id })
     } else {
-      toast.error("Unable to send verification Link.")
+      toast.error("Unable to send verification Link.");
+      router.replace("/")
     }
   }
 
-
   useEffect(() => {
-    if (user?.emailVerified) {
-      router.replace("/profiles")
+    if (user?._id) {
+      if (user?.emailVerified) {
+        router.replace("/profiles")
+      }
+    } else {
+      router.replace("/")
     }
-
-
   }, [user])
 
   const validateEmail = async () => {
@@ -53,9 +56,7 @@ const Page = ({ searchParams }) => {
     }
 
     try {
-
       const res = await axios.get(`/api/emailVerification?token=${token}&email=${email}`)
-
       if (res.status == 200) {
         toast.success("Your Email has been verified successfully.");
         dispatch(login(res.data))
@@ -63,7 +64,6 @@ const Page = ({ searchParams }) => {
         router.replace("/verify-email")
         toast.error("Invalid or expired link");
       }
-
     } catch (error) {
       const data = error?.response?.data;
       if (data) {
@@ -74,8 +74,6 @@ const Page = ({ searchParams }) => {
       }
 
     }
-
-
   }
 
   useEffect(() => {
@@ -92,21 +90,9 @@ const Page = ({ searchParams }) => {
           <div className={styles.signout} >
             <button className={styles.signout} onClick={handleSignout} title="Sign out">
               {
-                isSubmitting ? (
-                  <>
-                    {/* <ImSpinner2 />
-                  Logging Out */}
-                    logging out
-                  </>
-
-                ) : (
-                  <>
-                    <FaPowerOff className={styles.signoutIcon} />
-                    {user?.displayName}
-                  </>
-                )
-
+                isSubmitting ? <Spinner /> : <FaPowerOff className={styles.signoutIcon} />
               }
+              {user?.displayName}
             </button>
           </div>
         </header>
@@ -149,8 +135,8 @@ const Page = ({ searchParams }) => {
       <main className={styles.main}>
         <Image priority src={"/mail.png"} height={180} width={180} alt="email sticker" />
         <h1>Please check your email</h1>
-        <p>You are almost there! A verification link has been sent to <b>{`'${user?.email}'`} </b></p>
-        <p>{ `Click on the link in that mail to complete your signup. If you can't find it, please consider checking your spam folder.` }</p>
+        <p>You are almost there! A verification link has been sent to {user?.email ? <b>{`'${user?.email}'`} </b> : "your email."}</p>
+        <p>{`Click on the link in that mail to complete your signup. If you can't find it, please consider checking your spam folder.`}</p>
         <br />
         <p>{`Still can't find it? No problem.`}</p>
         <button onClick={handleEmailResend} className={styles.resendBtn}> Resend </button>

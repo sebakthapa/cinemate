@@ -131,6 +131,7 @@ const Page = ({ searchParams }) => {
         }
     }, [confirmPassword, password])
 
+    console.log(searchParams)
 
     if (searchParams.step == "create-new-password") {
         return (

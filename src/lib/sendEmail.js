@@ -11,7 +11,6 @@ const defaultServer = {
     }
 }
 export const sendEmail = async ({ server = defaultServer, email, text, html, subject }) => {
-
     const transport = createTransport(server)
     const result = await transport.sendMail({
         to: email,
@@ -19,7 +18,6 @@ export const sendEmail = async ({ server = defaultServer, email, text, html, sub
         subject,
         text,
         html,
-
     })
 
     const failed = result.rejected.concat(result.pending).filter(Boolean)
