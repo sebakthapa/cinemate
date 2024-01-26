@@ -4,16 +4,17 @@ import styles from "./reset-password.module.css"
 import { useEffect, useState } from "react"
 import Logo from "@/components/Logo"
 import Spinner from "@/components/Spinner"
-import { useRouter } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation"
 import axios from "axios"
 import toast from "react-hot-toast"
 
-const Page = ({ searchParams }) => {
+const Page = ({  }) => {
     const router = useRouter();
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [confirmPassword, setConfirmPassword] = useState("")
     const [isSubmitting, setIsSubmitting] = useState(false)
+    const searchParams = useSearchParams();
 
     const [passwordValidation, setPasswordValidation] = useState({ status: "hidden", message: "" })
     const [confirmPasswordValidation, setConfirmPasswordValidation] = useState({ status: "hidden", message: "" })
@@ -28,7 +29,7 @@ const Page = ({ searchParams }) => {
             });
             if (res.status == 200) {
                 router.replace("/login")
-                toast.success("Email sent with password reset instruction.", {duration:10000})
+                toast.success("Email sent with password reset instruction.", { duration: 10000 })
             }
 
 
@@ -55,7 +56,7 @@ const Page = ({ searchParams }) => {
             try {
                 setIsSubmitting(true)
                 const res = await axios.patch("/api/passwordReset", {
-                    password, confirmPassword, email:searchParams.email, token: searchParams.token
+                    password, confirmPassword, email: searchParams.email, token: searchParams.token
                 })
                 console.log(res)
                 if (res.status == 200) {
@@ -69,11 +70,11 @@ const Page = ({ searchParams }) => {
                 if (data.error) {
                     toast.error("Error! " + data.message);
                     router.replace("/login")
-                    
+
                 } else {
                     console.log(error)
                     toast.error("An unexpected error occured.")
-                    
+
                 }
             } finally {
                 setIsSubmitting(false)
@@ -133,7 +134,7 @@ const Page = ({ searchParams }) => {
 
     console.log(searchParams)
 
-    if (searchParams.step == "create-new-password") {
+    if (searchParams.get("step") == "create-new-password") {
         return (
             <>
                 <div className={styles.logo}>

@@ -2,7 +2,7 @@
 import { FaPowerOff } from "react-icons/fa"
 import styles from "./verify-email.module.css"
 import Logo from "@/components/Logo"
-import { useRouter } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation"
 import { useDispatch, useSelector } from "react-redux"
 import { login, logout } from "@/redux/userSlice"
 import { useEffect, useState } from "react"
@@ -13,13 +13,15 @@ import axios from "axios"
 import Spinner from "@/components/Spinner"
 
 
-const Page = ({ searchParams }) => {
+const Page = ({ }) => {
   console.log(searchParams)
   const router = useRouter()
   const dispatch = useDispatch();
   const user = useSelector(state => state.user);
 
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const searchParams = useSearchParams
 
   const handleSignout = () => {
     dispatch(logout())
@@ -46,12 +48,13 @@ const Page = ({ searchParams }) => {
   }, [user])
 
   const validateEmail = async () => {
-    const token = searchParams.token;
-    const email = searchParams.email;
+    const token = searchParams.get("token");
+    const email = searchParams.get("email");
 
     if (!email || !token) {
       toast.error("Unable to verify your email.")
-      router.replace("/verify-email")
+      router.replace("/");
+      console.error("No credentials provided to verify email")
       return;
     }
 
@@ -68,7 +71,7 @@ const Page = ({ searchParams }) => {
       const data = error?.response?.data;
       if (data) {
         toast.error(data.error);
-        router.replace("/verify-email")
+        router.replace("/")
       } else {
         console.log("error", error)
       }
@@ -77,12 +80,12 @@ const Page = ({ searchParams }) => {
   }
 
   useEffect(() => {
-    if (searchParams.st == "verification") {
+    if (searchParams.get("st") == "verification") {
       validateEmail();
     }
   }, [])
 
-  if (searchParams.st == "verification") {
+  if (searchParams.get("st") == "verification") {
     return (
       <>
         <header className={styles.header}>
