@@ -5,7 +5,7 @@ import Card from '@/components/Card';
 import Faq from '@/components/Faq';
 import Footer from '@/components/Footer';
 import Banner from '@/components/Banner';
-import {  useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import styles from "./page.module.css"
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
@@ -24,14 +24,14 @@ function GetStarted() {
     useEffect(() => {
         if (user?._id) {
             if (user?.emailVerified) {
-            console.log("Moving to / route")
+                console.log("Moving to / route")
 
                 router.replace("/home")
             } else {
                 sendVerificationEmail({ email: user?.email, userId: user?._id })
-            console.log("Moving to /verify-email route")
-                
-                router.replace("/verify-email")
+                console.log("Moving to /verify-email route")
+
+                router.push("/verify-email")
             }
         }
     }, [user])
@@ -100,68 +100,68 @@ function GetStarted() {
     return (
         <>
             {/* { */}
-                {/* !user && ( */}
+            {/* !user && ( */}
 
-                    <div className={styles.signup} >
+            <div className={styles.signup} >
 
-                        <div className={styles.signup__header}>
-                            <div className={styles.signup__logo}>
-                                <Logo  link={"/"}/>
+                <div className={styles.signup__header}>
+                    <div className={styles.signup__logo}>
+                        <Logo link={"/"} />
+                    </div>
+                    <div className={styles.signup__headerSwitch}>
+                        <Link href="/login" >Log In</Link>
+                    </div>
+                </div>
+
+                <div className={styles.signup__hero}>
+                    <Banner />
+                    <div className={styles.signup__heroContent}>
+                        <h1 className={styles.signup__heroTitle}>
+                            Unlimited movies, TV shows, and more.
+                        </h1>
+                        <h6 className={styles.signup__heroSubtitle}>
+                            Ready to watch? Enter your email to create or restart your membership.
+                        </h6>
+                        <div className={styles.signup__heroForm}>
+                            <div className={styles.signup__heroEmail}>
+                                <input type="text" required value={email} onChange={(e) => setEmail(e.target.value)} onKeyDown={(e) => e.code === "Enter" && navigate("/signup", { state: { email: email } })} />
+                                <label>Email address</label>
                             </div>
-                            <div className={styles.signup__headerSwitch}>
-                                <Link href="/login" >Log In</Link>
-                            </div>
+                            <button className={styles.getStarted} ><Link href={`/signup?e=${email}`}>Get Started</Link></button>
                         </div>
+                    </div>
+                </div>
 
-                        <div className={styles.signup__hero}>
-                            <Banner />
-                            <div className={styles.signup__heroContent}>
-                                <h1 className={styles.signup__heroTitle}>
-                                    Unlimited movies, TV shows, and more.
-                                </h1>
-                                <h6 className={styles.signup__heroSubtitle}>
-                                    Ready to watch? Enter your email to create or restart your membership.
-                                </h6>
-                                <div className={styles.signup__heroForm}>
-                                    <div className={styles.signup__heroEmail}>
-                                        <input type="text" required value={email} onChange={(e) => setEmail(e.target.value)} onKeyDown={(e) => e.code === "Enter" && navigate("/signup", { state: { email: email } })} />
-                                        <label>Email address</label>
-                                    </div>
-                                    <button className={styles.getStarted} ><Link href={`/signup?e=${email}`}>Get Started</Link></button>
-                                </div>
+                <div className={styles.signup__body}>
+                    <div className={styles.signup__cardsContainer}>
+                        {
+                            cards.map(({ img, title, subtitle }, index) => (
+                                <Card key={index} image={img} title={title} subtitle={subtitle} />
+                            ))
+                        }
+
+                    </div>
+                    <div className={styles.signup__faqContainer}>
+                        <h1 className={styles.signup__faqTitle}>FAQs</h1>
+                        {
+                            faqs.map(({ question, answer }, index) => (
+                                <Faq key={index} question={question} answer={answer} />
+                            ))
+                        }
+
+                        <div className={styles.signup__heroForm}>
+                            <div className={styles.signup__heroEmail}>
+                                <input type="text" required value={email} onChange={(e) => setEmail(e.target.value)} />
+                                <label>Email address</label>
                             </div>
+                            <button className={styles.getStarted} onClick={() => router.push(`/signup?e=${email}`)}>Get Started</button>
                         </div>
+                    </div>
+                </div>
 
-                        <div className={styles.signup__body}>
-                            <div className={styles.signup__cardsContainer}>
-                                {
-                                    cards.map(({ img, title, subtitle }, index) => (
-                                        <Card key={index} image={img} title={title} subtitle={subtitle} />
-                                    ))
-                                }
-
-                            </div>
-                            <div className={styles.signup__faqContainer}>
-                                <h1 className={styles.signup__faqTitle}>FAQs</h1>
-                                {
-                                    faqs.map(({ question, answer }, index) => (
-                                        <Faq key={index} question={question} answer={answer} />
-                                    ))
-                                }
-
-                                <div className={styles.signup__heroForm}>
-                                    <div className={styles.signup__heroEmail}>
-                                        <input type="text" required value={email} onChange={(e) => setEmail(e.target.value)} />
-                                        <label>Email address</label>
-                                    </div>
-                                    <button className={styles.getStarted} onClick={() => router.push(`/signup?e=${email}`) }>Get Started</button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <Footer />
-                    </div >
-                {/* ) */}
+                <Footer />
+            </div >
+            {/* ) */}
             {/* } */}
         </>
 

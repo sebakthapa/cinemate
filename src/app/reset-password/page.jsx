@@ -35,9 +35,10 @@ const Page = ({  }) => {
 
         } catch (error) {
             const data = error?.response?.data;
+            console.log(error)
 
             if (data.error) {
-                toast.error(data.message)
+                toast.error(data.message || "Unable to perform this action now!")
             } else {
                 console.log("ERROR", error)
                 toast.error("An unexpected error occured!")
@@ -56,7 +57,7 @@ const Page = ({  }) => {
             try {
                 setIsSubmitting(true)
                 const res = await axios.patch("/api/passwordReset", {
-                    password, confirmPassword, email: searchParams.email, token: searchParams.token
+                    password, confirmPassword, email: searchParams.get("email"), token: searchParams.get("token")
                 })
                 console.log(res)
                 if (res.status == 200) {
@@ -67,14 +68,14 @@ const Page = ({  }) => {
                 }
             } catch (error) {
                 const data = error?.response?.data;
+                console.log(error)
                 if (data.error) {
-                    toast.error("Error! " + data.message);
+                    toast.error(data.message || "Invalid or Expired link");
                     router.replace("/login")
 
                 } else {
                     console.log(error)
-                    toast.error("An unexpected error occured.")
-
+                    toast.error("Please try again later!")
                 }
             } finally {
                 setIsSubmitting(false)
@@ -132,7 +133,6 @@ const Page = ({  }) => {
         }
     }, [confirmPassword, password])
 
-    console.log(searchParams)
 
     if (searchParams.get("step") == "create-new-password") {
         return (

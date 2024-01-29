@@ -14,14 +14,13 @@ import Spinner from "@/components/Spinner"
 
 
 const Page = ({ }) => {
-  console.log(searchParams)
   const router = useRouter()
   const dispatch = useDispatch();
   const user = useSelector(state => state.user);
 
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const searchParams = useSearchParams
+  const searchParams = useSearchParams()
 
   const handleSignout = () => {
     dispatch(logout())
