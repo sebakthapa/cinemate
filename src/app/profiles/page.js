@@ -87,6 +87,7 @@ function Profiles() {
                 <h1 className={styles.profiles__title}>Select your profile</h1>
                 <div className={styles.profiles__container}>
                     {allProfiles?.length > 0 && allProfiles.map(({ name, avatar, uid, isKid, hasPin, pin, _id }, index) => {
+                        console.log(isKid)
                         return <Profile key={index} name={name} avatar={avatar} uid={uid} id={_id} isKid={isKid} hasPin={hasPin} />
                     })}
 
