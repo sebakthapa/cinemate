@@ -1,9 +1,9 @@
 // POST => CREATE NEW PROFILE for the user
 
+import bcrypt from 'bcrypt';
+import { NextResponse } from 'next/server';
 import connectToDatabase from '@/lib/dbConnect';
 import Profiles from '@/models/profile';
-import { NextResponse } from 'next/server';
-import bcrypt from 'bcrypt';
 
 export const POST = async (request) => {
   try {
@@ -39,14 +39,13 @@ export const POST = async (request) => {
     await connectToDatabase();
 
     const allProfiles = await Profiles.find({ uid });
-    console.group(allProfiles);
     if (allProfiles.length >= 3) {
       return new NextResponse(
         JSON.stringify({ message: 'Maximum profile limit reached', fields: ['name'] }),
         { status: 401 }
       );
     }
-    const existingProfile = allProfiles.filter((profile) => profile.name == name);
+    const existingProfile = allProfiles.filter((profile) => profile.name === name);
     if (existingProfile.length > 0) {
       return new NextResponse(JSON.stringify({ message: 'Enter another name', fields: ['name'] }), {
         status: 401,
@@ -99,10 +98,11 @@ export const GET = async (request) => {
     await connectToDatabase();
 
     const fetchedProfiles = await Profiles.find({ uid });
-    console.log(fetchedProfiles);
 
     const profiles = fetchedProfiles.map(({ _doc: doc }) => {
+      // eslint-disable-next-line no-unused-vars
       const { pin, ...data } = doc;
+
       return data;
     });
 

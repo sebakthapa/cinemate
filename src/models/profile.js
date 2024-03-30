@@ -1,9 +1,9 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 const profileSchema = new mongoose.Schema({
   uid: {
     type: String,
-    required:true,
+    required: true,
   },
   name: {
     type: String,
@@ -17,17 +17,16 @@ const profileSchema = new mongoose.Schema({
   },
   isKid: {
     type: Boolean,
-    required:true,
+    required: true,
   },
   pin: {
     type: String,
-    
   },
-  hasPin  : {
+  hasPin: {
     type: Boolean,
-    required:true,
+    required: true,
   },
-})
+});
 
 const Profiles = mongoose.models.Profiles || mongoose.model('Profiles', profileSchema);
 

@@ -1,10 +1,10 @@
-import moment from "moment";
+import moment from 'moment';
 
 export const passwordResetHtml = (params) => {
-    const { url, host } = params;
-    const escapedHost = host.replace(/\./g, "&#8203;.")
-  
-    return `<!DOCTYPE html>
+  const { url, host } = params;
+  // const escapedHost = host.replace(/\./g, '&#8203;.');
+
+  return `<!DOCTYPE html>
     <html lang="en" xmlns:v="urn:schemas-microsoft-com:vml">
     
     <head>
@@ -395,19 +395,19 @@ export const passwordResetHtml = (params) => {
         </div>
     </body>
     
-    </html>`
-  }
-  
-  export function passwordResetText(params) {
-    const { url, host } = params;
-    return `Reset password for ${host}\n click on the link below to open password reset page. \n ${url}\n\n`
-  }
-  
-  
-  export const passwordResetSuccessHtml = (params) => {
-    const { host } = params;
-  
-    return `<!DOCTYPE html>
+    </html>`;
+};
+
+export function passwordResetText(params) {
+  const { url, host } = params;
+
+  return `Reset password for ${host}\n click on the link below to open password reset page. \n ${url}\n\n`;
+}
+
+export const passwordResetSuccessHtml = (params) => {
+  const { host } = params;
+
+  return `<!DOCTYPE html>
     <html lang="en" xmlns:v="urn:schemas-microsoft-com:vml">
     <head>
       <meta charset="utf-8">
@@ -621,7 +621,9 @@ export const passwordResetHtml = (params) => {
                                     <br>
                                     <br>
                                     -->
-                                   Your password has been changed successfully on ${moment(new Date()).format("Do-MMM YYYY, h:mm a")}.<br />
+                                   Your password has been changed successfully on ${moment(new Date()).format(
+                                     'Do-MMM YYYY, h:mm a'
+                                   )}.<br />
                                    You can now login with your new password.
                                   </p>
                                 </td>
@@ -778,10 +780,13 @@ export const passwordResetHtml = (params) => {
         </table>
       </div>
     </body>
-    </html>`
-  }
-  
-  export function passwordResetsuccessText(params) {
-    const {  host } = params;
-    return `Your password has been Changed for ${host} on ${moment(new Date()).format("Do-MMM YYYY, h:mm a")}.\n click on the link below to proceed to login page. \n ${host}/login\n\n`
-  }
+    </html>`;
+};
+
+export function passwordResetsuccessText(params) {
+  const { host } = params;
+
+  return `Your password has been Changed for ${host} on ${moment(new Date()).format(
+    'Do-MMM YYYY, h:mm a'
+  )}.\n click on the link below to proceed to login page. \n ${host}/login\n\n`;
+}

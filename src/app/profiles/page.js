@@ -1,13 +1,13 @@
 'use client';
-import styles from '@/components/css/profiles.module.css';
-import Profile from '@/components/Profile';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { FaPowerOff } from 'react-icons/fa';
-import Logo from '@/components/Logo';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
+import styles from '@/components/css/profiles.module.css';
+import Profile from '@/components/Profile';
+import Logo from '@/components/Logo';
 import { setProfile } from '@/redux/allProfilesSlice';
 import { logout } from '@/redux/userSlice';
 import { sendVerificationEmail } from '@/lib';
@@ -49,7 +49,6 @@ function Profiles() {
     try {
       const response = await axios.get(`/api/profile/${user?._id}`);
       const data = response.data;
-      console.log(data);
       dispatch(setProfile(data));
     } catch (error) {
       console.log(error);
@@ -82,8 +81,9 @@ function Profiles() {
         <h1 className={styles.profiles__title}>Select your profile</h1>
         <div className={styles.profiles__container}>
           {allProfiles?.length > 0 &&
-            allProfiles.map(({ name, avatar, uid, isKid, hasPin, pin, _id }, index) => {
+            allProfiles.map(({ name, avatar, uid, isKid, hasPin, _id }, index) => {
               console.log(isKid);
+
               return (
                 <Profile
                   key={index}

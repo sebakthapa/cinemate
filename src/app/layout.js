@@ -1,30 +1,29 @@
-import ReduxProvider from '@/components/ReduxProvider'
-import './globals.css'
-import { Inter } from 'next/font/google'
-import { websiteName } from '@/lib'
-import { Toaster } from 'react-hot-toast'
-import PageLoader from '@/components/PageLoader'
+import { Inter } from 'next/font/google';
+import { Toaster } from 'react-hot-toast';
+import ReduxProvider from '@/components/ReduxProvider';
+import './globals.css';
+import { websiteName } from '@/lib';
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({ subsets: ['latin'] });
 
 export const metadata = {
   title: `${websiteName} - Watch anything anywhere`,
   description: `${websiteName} - A place where you may relax`,
-  icon: "/logo.jpg"
-}
+  icon: '/logo.jpg',
+};
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang='en'>
       <head>
-        <link rel="icon" href="/favicon.ico" sizes="any" />
+        <link rel='icon' href='/favicon.ico' sizes='any' />
       </head>
       <body className={inter.className}>
         <ReduxProvider>
           <Toaster
-            position="bottom-right"
+            position='bottom-right'
             reverseOrder={false}
-            containerClassName=""
+            containerClassName=''
             containerStyle={{}}
             toastOptions={{
               className: '',
@@ -36,12 +35,9 @@ export default function RootLayout({ children }) {
             }}
           />
 
-          
           {children}
-
         </ReduxProvider>
-
       </body>
     </html>
-  )
+  );
 }

@@ -1,8 +1,8 @@
 export function EmailVerifyHtml(params) {
-    const { url, host, theme } = params;
-    const escapedHost = host.replace(/\./g, "&#8203;.")
-  
-    return `<!DOCTYPE html>
+  const { url } = params;
+  // const escapedHost = host.replace(/\./g, '&#8203;.');
+
+  return `<!DOCTYPE html>
     <html lang="en" xmlns:v="urn:schemas-microsoft-com:vml">
     <head>
       <meta charset="utf-8">
@@ -335,11 +335,12 @@ export function EmailVerifyHtml(params) {
         </table>
       </div>
     </body>
-    </html>`
-  }
-  
-  // Email Text body (fallback for email clients that don't render HTML)
-  export function emailVerifyText(params) {
-    const { url, host } = params;
-    return `Sign in to ${host}.\n click on the link below to verify your email. \n ${url}\n\n`
-  }
+    </html>`;
+}
+
+// Email Text body (fallback for email clients that don't render HTML)
+export function emailVerifyText(params) {
+  const { url, host } = params;
+
+  return `Sign in to ${host}.\n click on the link below to verify your email. \n ${url}\n\n`;
+}

@@ -1,14 +1,10 @@
+/* eslint-disable no-await-in-loop */
 'use client';
 import { useEffect, useState } from 'react';
-import styles from '@/components/css/createProfile.module.css';
-import Input from '@/components/Input';
-import { getAvatarSVG } from '@/lib';
-import { useDispatch, useSelector } from 'react-redux';
 import Link from 'next/link';
-import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/navigation';
-import { loginProfile } from '@/redux/profileSlice';
-import Spinner from '@/components/Spinner';
+import axios from 'axios';
 import {
   MdCheckBox,
   MdKeyboardArrowLeft,
@@ -16,6 +12,11 @@ import {
   MdOutlineCheckBoxOutlineBlank,
 } from 'react-icons/md';
 import { CiUser } from 'react-icons/ci';
+import { getAvatarSVG } from '@/lib';
+import Input from '@/components/Input';
+import styles from '@/components/css/createProfile.module.css';
+import { loginProfile } from '@/redux/profileSlice';
+import Spinner from '@/components/Spinner';
 
 function CreateProfile() {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -40,11 +41,13 @@ function CreateProfile() {
         router.push('/verify-email');
       }
     }
-  }, [user]);
+  }, [user, router]);
 
   useEffect(() => {
-    if (profile?.id) router.push('/home');
-  }, [profile]);
+    if (profile?.id) {
+      router.push('/home');
+    }
+  }, [profile, router]);
 
   allProfiles && allProfiles.length >= 3 && router.push('/profiles');
 
@@ -85,13 +88,13 @@ function CreateProfile() {
           // pinNeeded && (data.pin = pin);
           const response = await axios.post(`/api/profile/${user._id}`, data);
 
-          if (response.status == 200) {
+          if (response.status === 200) {
             const profileData = response.data;
             dispatch(loginProfile(profileData));
           }
         } catch (error) {
           if (error?.response?.data) {
-            const { message, fields } = error?.response?.data;
+            const { message, fields } = error?.response?.data || {};
             fields.forEach((field) => {
               switch (field) {
                 case 'name':
@@ -119,7 +122,7 @@ function CreateProfile() {
     if (name) {
       if (name.length < 3) {
         setNameValidation({ status: 'invalid', message: 'Name must contain 3 letters' });
-      } else if (allProfiles.map(({ name }) => name) == name) {
+      } else if (allProfiles.map(({ name }) => name) === name) {
         setNameValidation({ status: 'invalid', message: 'Choose another name' });
       } else {
         setNameValidation({ status: 'valid', message: '' });
@@ -127,7 +130,7 @@ function CreateProfile() {
     } else {
       setNameValidation({ status: 'hidden' });
     }
-  }, [name]);
+  }, [name, allProfiles]);
 
   useEffect(() => {
     if (pin) {
@@ -172,12 +175,10 @@ function CreateProfile() {
 
     // fetch 4 avatars (3 extra as a queue)
     for (let i = 0; i < 1 + prefetchAvatarlength; i++) {
-      const svg = await getAvatarSVG(i == 0 && name);
-      console.log(svg);
+      const svg = await getAvatarSVG(i === 0 && name);
       if (svg) {
-        i == 0 && setLoadingAvatar(false);
+        i === 0 && setLoadingAvatar(false);
         setAvatarCollection((prev) => [...prev, svg]);
-        console.log(avatarCollection);
       }
     }
   };
@@ -196,7 +197,7 @@ function CreateProfile() {
           <div
             className={styles.createProfile__image}
             style={{
-              border: avatarCollection.length == 0 ? '2px solid rgba(255,255,255,.2)' : 'none',
+              border: avatarCollection.length === 0 ? '2px solid rgba(255,255,255,.2)' : 'none',
               cursor: name.length < 3 ? 'default' : 'pointer',
             }}
           >
@@ -233,7 +234,7 @@ function CreateProfile() {
               <>{loadingAvatar ? <Spinner /> : <CiUser fontSize={'10rem'} color='#444' />}</>
             )}
           </div>
-          {avatarCollection.length == 0 && (
+          {avatarCollection.length === 0 && (
             <p style={{ textAlign: 'center', marginTop: '-3.5rem', color: '#888' }}>
               Enter name to generate avatar
             </p>

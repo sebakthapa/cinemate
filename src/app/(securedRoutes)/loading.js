@@ -1,10 +1,8 @@
-import PageLoader from '@/components/PageLoader'
-import React from 'react'
+import React from 'react';
+import PageLoader from '@/components/PageLoader';
 
 const loading = () => {
-  return (
-      <PageLoader />
-  )
-}
+  return <PageLoader />;
+};
 
-export default loading
+export default loading;

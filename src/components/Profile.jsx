@@ -1,13 +1,12 @@
 import { useRouter } from 'next/navigation';
-import styles from './css/profile.module.css';
 import { useDispatch } from 'react-redux';
-import Link from 'next/link';
 import Image from 'next/image';
-import { loginProfile } from '@/redux/profileSlice';
 import { BsThreeDotsVertical } from 'react-icons/bs';
 import { AiOutlineUserDelete } from 'react-icons/ai';
 import { TbUserEdit } from 'react-icons/tb';
-import ConfirmPasswordModal from './ConfirmPasswordModal';
+import styles from './css/profile.module.css';
+// import ConfirmPasswordModal from './ConfirmPasswordModal';
+import { loginProfile } from '@/redux/profileSlice';
 
 function Profile(props) {
   const dispatch = useDispatch();
@@ -20,10 +19,8 @@ function Profile(props) {
     }
   };
 
-  let linkPath = '#';
-
   const handleRoute = () => {
-    if (props.type == 'addProfile') {
+    if (props.type === 'addProfile') {
       router.replace('/profiles/create');
     } else {
       if (props.hasPin) {
@@ -56,7 +53,7 @@ function Profile(props) {
         </div>
       )}
       <div>
-        {props.type != 'addProfile' && (
+        {props.type !== 'addProfile' && (
           <div
             onClick={handleRoute}
             style={{ height: '150px', width: '150px', cursor: 'pointer' }}
@@ -64,7 +61,7 @@ function Profile(props) {
             className={styles.profile__svg}
           ></div>
         )}
-        {props.type == 'addProfile' && (
+        {props.type === 'addProfile' && (
           <div className={styles.profile__image} onClick={handleRoute}>
             <Image height='150' src={props.avatar} alt='profile avatar' width='150' />
           </div>
