@@ -1,3 +1,63 @@
 {
-  "extends": "next/core-web-vitals"
+  "extends": ["next/core-web-vitals", "prettier", "eslint:recommended"],
+  "ignorePatterns": ["**/*.d.ts"],
+  "rules": {
+    "semi": 2,
+    "curly": 2,
+    "no-var": 2,
+    "no-unused-vars": "error",
+    "eqeqeq": 2,
+    "eol-last": ["error", "always"],
+    "key-spacing": 2,
+    "require-await": 2,
+    "spaced-comment": 2,
+    "space-infix-ops": 2,
+    "no-return-await": 2,
+    "no-await-in-loop": 2,
+    "space-before-blocks": 2,
+    "newline-before-return": 2,
+    // "linebreak-style": ["error", "windows"],
+    "object-curly-spacing": [2, "always"],
+    "camelcase": [2, { "properties": "never" }],
+    "quotes": [2, "single", { "allowTemplateLiterals": true }],
+    "no-console": "warn",
+    "no-useless-escape": "off",
+    "import/order": [
+      "error",
+      {
+        "pathGroups": [
+          {
+            "pattern": "next",
+            "group": "builtin",
+            "position": "before"
+          }
+        ],
+        "pathGroupsExcludedImportTypes": ["react", "next"],
+        "groups": ["builtin", "external", "internal", "object", "parent", "sibling", "type", "index"]
+      }
+    ],
+    // "import/no-unresolved": [
+    //   "error",
+    //   {
+    //     "commonjs": true,
+    //     "amd": true
+    //   }
+    // ],
+    "import/named": "error",
+    "import/namespace": "warn",
+    "import/default": "warn",
+    "import/export": "warn"
+  },
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+    // "import/resolver": {
+    //   "node": {
+    //     "extensions": [".js", ".jsx", ".ts", ".tsx"],
+    //     "moduleDirectory": ["node_modules", "src/"],
+    //     "paths": ["."]
+    //   }
+    // }
+  }
 }
