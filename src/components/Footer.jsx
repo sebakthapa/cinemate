@@ -1,5 +1,5 @@
 import React from 'react';
-import { FaFacebookSquare, FaLinkedin, FaTwitterSquare } from 'react-icons/fa';
+import { FaLinkedin, FaTwitterSquare } from 'react-icons/fa';
 import { AiFillGithub } from 'react-icons/ai';
 import styles from './css/footer.module.css';
 import { websiteName } from '@/lib';
@@ -8,13 +8,13 @@ function Footer() {
   return (
     <div className={styles.footer}>
       <div className={styles.footer__left}>
-        <a target='_blank' href='https://www.facebook.com/sebak.thapa.7'>
-          <FaFacebookSquare />
-        </a>
         <a target='_blank' href='https://twitter.com/Sebakthapa'>
           <FaTwitterSquare />
         </a>
-        <a target='_blank' href='https://www.linkedin.com/in/sebak-thapa-a2b863201/'>
+        <a
+          target='_blank'
+          href='https://www.linkedin.com/in/sebak-thapa-a2b863201/'
+        >
           <FaLinkedin />
         </a>
       </div>
