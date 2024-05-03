@@ -1,11 +1,11 @@
-import Home from '@/components/Home'
+import Home from '@/components/Home';
 
 const page = () => {
   return (
     <div>
       <Home />
     </div>
-  )
-}
+  );
+};
 
-export default page
+export default page;

@@ -1,28 +1,30 @@
-const { default: mongoose } = require("mongoose");
+const { default: mongoose } = require('mongoose');
 
 // models/token.model.js
-const tokenSchema = new mongoose.Schema({
+const tokenSchema = new mongoose.Schema(
+  {
     email: {
-        type: String,
-        required: true,
-        ref: "user",
+      type: String,
+      required: true,
+      ref: 'user',
     },
     token: {
-        type: String,
-        required: true,
+      type: String,
+      required: true,
     },
     createdAt: {
-        type: Date,
-        default: Date.now,
-        expires: 3600,// this is the expiry time in seconds
+      type: Date,
+      default: Date.now,
+      expires: 3600, // this is the expiry time in seconds
     },
-}, {
-    expires: "1h"
-});
-
+  },
+  {
+    expires: '1h',
+  }
+);
 
 mongoose.models = {};
 
-const PasswordResetTokens = mongoose.model("PasswordResetTokens", tokenSchema);
+const PasswordResetTokens = mongoose.model('PasswordResetTokens', tokenSchema);
 
 export default PasswordResetTokens;

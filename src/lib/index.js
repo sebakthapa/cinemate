@@ -1,5 +1,5 @@
-import axios from "axios";
-import toast from "react-hot-toast";
+import axios from 'axios';
+import toast from 'react-hot-toast';
 
 export const generateRandomWord = (length) => {
   const characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -17,54 +17,60 @@ export const generateRandomWord = (length) => {
   }
 
   return randomWord;
-}
-
+};
 
 export const getAvatarSVG = async (avatarId) => {
-  if (!avatarId) avatarId = generateRandomWord(10)
-  const res = await axios.get(`https://api.multiavatar.com/${JSON.stringify(avatarId)}?apiKey=${process.env.AVATAR_API_KEY}`);
+  if (!avatarId) {
+    avatarId = generateRandomWord(10);
+  }
+  const res = await axios.get(
+    `https://api.multiavatar.com/${JSON.stringify(avatarId)}?apiKey=${process.env.AVATAR_API_KEY}`
+  );
   const svg = await res.data;
+
   return svg;
-}
+};
 
 export const minuteToHour = (min) => {
-  const hour = parseInt(min / 60);;
-  let extraMinutes = min - (hour * 60);
-  if (extraMinutes < 10) extraMinutes = `0${extraMinutes}`
+  const hour = parseInt(min / 60);
+  let extraMinutes = min - hour * 60;
+  if (extraMinutes < 10) {
+    extraMinutes = `0${extraMinutes}`;
+  }
 
-  return { hour: hour, minutes: extraMinutes }
-}
+  return { hour: hour, minutes: extraMinutes };
+};
 
-export const websiteName = "Cinemate"
-
-
+export const websiteName = 'Cinemate';
 
 export const sendVerificationEmail = async ({ userId, email }) => {
   try {
-    const promise = axios.post("/api/emailVerification", {
+    const promise = axios.post('/api/emailVerification', {
       email,
-      userId
-    })
+      userId,
+    });
 
-    toast.promise(promise, {
-      loading: "Sending verification email...",
-      success: "verification email sent.",
-      error: (err) => {
-        if (err.response?.status == 403) {
-          return "Too many frequent requests."
-        }
-        return "Unable to send verification email."
-      }
-    }, {success:{duration:10000}, error:{duration:10000}})
+    toast.promise(
+      promise,
+      {
+        loading: 'Sending verification email...',
+        success: 'verification email sent.',
+        error: (err) => {
+          if (err.response?.status === 403) {
+            return 'Too many frequent requests.';
+          }
+
+          return 'Unable to send verification email.';
+        },
+      },
+      { success: { duration: 10000 }, error: { duration: 10000 } }
+    );
 
     const res = await promise;
+
     return res;
-
   } catch (error) {
-    console.log("ERROR WHILE SENDING VERIFICATION EMAIL FROM BROWSER", error)
+    console.log('ERROR WHILE SENDING VERIFICATION EMAIL FROM BROWSER', error);
     throw error;
-
   }
-
-
-}
+};
