@@ -21,13 +21,9 @@ function GetStarted() {
   useEffect(() => {
     if (user?._id) {
       if (user?.emailVerified) {
-        console.log('Moving to / route');
-
         router.replace('/home');
       } else {
         sendVerificationEmail({ email: user?.email, userId: user?._id });
-        console.log('Moving to /verify-email route');
-
         router.push('/verify-email');
       }
     }
@@ -43,7 +39,8 @@ function GetStarted() {
     {
       img: '/cardBanner2.png',
       title: 'Watch everywhere.',
-      subtitle: 'Stream unlimited movies and TV shows on your phone, tablet, laptop, and TV.',
+      subtitle:
+        'Stream unlimited movies and TV shows on your phone, tablet, laptop, and TV.',
     },
 
     {
@@ -55,7 +52,8 @@ function GetStarted() {
     {
       img: '/cardBanner4.png',
       title: 'Download your shows to watch offline.',
-      subtitle: 'Save your favorites easily and always have something to watch.',
+      subtitle:
+        'Save your favorites easily and always have something to watch.',
     },
   ];
 
@@ -112,9 +110,12 @@ function GetStarted() {
         <div className={styles.signup__hero}>
           <Banner />
           <div className={styles.signup__heroContent}>
-            <h1 className={styles.signup__heroTitle}>Unlimited movies, TV shows, and more.</h1>
+            <h1 className={styles.signup__heroTitle}>
+              Unlimited movies, TV shows, and more.
+            </h1>
             <h6 className={styles.signup__heroSubtitle}>
-              Ready to watch? Enter your email to create or restart your membership.
+              Ready to watch? Enter your email to create or restart your
+              membership.
             </h6>
             <div className={styles.signup__heroForm}>
               <div className={styles.signup__heroEmail}>
@@ -123,12 +124,14 @@ function GetStarted() {
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  onKeyDown={(e) => e.code === 'Enter' && router.push('/signup?email=' + email)}
+                  onKeyDown={(e) =>
+                    e.code === 'Enter' && router.push('/signup?email=' + email)
+                  }
                 />
                 <label>Email address</label>
               </div>
               <button className={styles.getStarted}>
-                <Link href={`/signup?e=${email}`}>Get Started</Link>
+                <Link href={`/signup?email=${email}`}>Get Started</Link>
               </button>
             </div>
           </div>
@@ -148,10 +151,18 @@ function GetStarted() {
 
             <div className={styles.signup__heroForm}>
               <div className={styles.signup__heroEmail}>
-                <input type='text' required value={email} onChange={(e) => setEmail(e.target.value)} />
+                <input
+                  type='text'
+                  required
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
                 <label>Email address</label>
               </div>
-              <button className={styles.getStarted} onClick={() => router.push(`/signup?e=${email}`)}>
+              <button
+                className={styles.getStarted}
+                onClick={() => router.push(`/signup?e=${email}`)}
+              >
                 Get Started
               </button>
             </div>

@@ -1,322 +1,303 @@
 .overview {
-    display: flex;
-    flex-direction: column;
-    gap: 3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
 }
 
 .movieDetails {
-    display: grid;
-    grid-template-columns: 4fr 6fr;
-    padding: 2rem 0 2rem 3rem;
-    gap: 4rem;
-    width: 100%;
-    max-width: 2000px;
-    margin: auto;
+  display: grid;
+  grid-template-columns: 4fr 6fr;
+  padding: 2rem 0 2rem 3rem;
+  gap: 4rem;
+  width: 100%;
+  max-width: 2000px;
+  margin: auto;
 }
 
 .image {
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
 }
 
 .image img {
-    width: 100%;
-    max-width: 500px;
-    /* height: auto; */
-    object-fit: contain;
+  width: 100%;
+  max-width: 500px;
+  /* height: auto; */
+  object-fit: contain;
 }
 
 .watchNowBtn {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: .4rem;
-    padding: .6rem 1.4rem;
-    border: none;
-    margin-top: 1.5rem;
-    cursor: pointer;
-    font-size: 1rem;
-    transition: .5s ease;
-    border: 2px solid #8a0000;
-    color: #ddd;
-    border-radius: 50px;
-    background: transparent;
-    width: fit-content;
-    height:fit-content;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.6rem 1.4rem;
+  border: none;
+  margin-top: 1.5rem;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: 0.5s ease;
+  border: 2px solid #8a0000;
+  color: #ddd;
+  border-radius: 50px;
+  background: transparent;
+  width: fit-content;
+  height: fit-content;
 }
 
 .watchNowBtn:hover {
-    background-color: #ce3737;
-    color: #fff;
-
+  background-color: #ce3737;
+  color: #fff;
 }
 
 .watchNowBtn:active {
-    background-color: #7c2222;
-
+  background-color: #7c2222;
 }
 
-
 .contents {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-    padding: 1rem;
-    width: 100%;
-    overflow: hidden;
-    max-width: 700px;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 1rem;
+  width: 100%;
+  overflow: hidden;
+  max-width: 700px;
 }
 
 .header {
-    display: flex;
-    gap: 3rem;
-    justify-content: space-between;
-    align-items: center;
+  display: flex;
+  gap: 3rem;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .title {
-    text-transform: capitalize;
-    font-size: 2.5rem;
+  text-transform: capitalize;
+  font-size: 2.5rem;
 }
 
-
 .subtitles {
-    display: flex;
-    flex-wrap: wrap;
-    color: #777;
-    font-weight: 500;
-    margin-top: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  color: #777;
+  font-weight: 500;
+  margin-top: 1rem;
 }
 
 .subtitles p {
-    border-right: 2px solid gray;
-    padding: 3px 1rem;
+  border-right: 2px solid gray;
+  padding: 3px 1rem;
 }
 
 .subtitles p:last-child {
-    border-right: none;
-    /* padding-right: 1rem; */
+  border-right: none;
+  /* padding-right: 1rem; */
 }
 
 .subtitles p:first-child {
-    padding-left: 0;
+  padding-left: 0;
 }
 
 .rating {
-    display: flex;
-    gap: .5rem;
-    align-items: center;
-    font-size: 2rem;
-    font-weight: 500;
-    margin-right: 10px;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  font-size: 2rem;
+  font-weight: 500;
+  margin-right: 10px;
 }
 
 .rating svg {
-    color: rgb(255, 204, 0)
+  color: rgb(255, 204, 0);
 }
 
 .descContainer {
-    margin: 1rem 0;
-    margin-top: 2rem;
-    width: 100%;
-    max-width: 700px;
+  margin: 1rem 0;
+  margin-top: 2rem;
+  width: 100%;
+  max-width: 700px;
 }
 
 .mobileImage {
-    display: none;
+  display: none;
 }
 
 .description {
-    width: 100%;
-    color: #ddd;
-    line-height: 180%;
+  width: 100%;
+  color: #ddd;
+  line-height: 180%;
 }
 
-
 .list {
-    color: #ccc;
-    text-align: left;
-    border-spacing: 0 20px;
-
+  color: #ccc;
+  text-align: left;
+  border-spacing: 0 20px;
 }
 
 .list tr {
-    margin-bottom: 4px;
+  margin-bottom: 4px;
 }
 
 .list th {
-    width: 120px;
-    font-weight: 500;
-    color: #666;
+  width: 120px;
+  font-weight: 500;
+  color: #666;
 }
 
-
 .similarMovies {
-    overflow: hidden;
-    width: 100%;
+  overflow: hidden;
+  width: 100%;
 }
 
 .similarMovies h4 {
-    font-size: 1.3rem;
-    text-transform: capitalize;
-    margin-bottom: -1.5rem;
-    color: #ccc;
+  font-size: 1.3rem;
+  text-transform: capitalize;
+  margin-bottom: -1.5rem;
+  color: #ccc;
 }
 
 .player {
-    position:fixed;
-    width: 100%;
-    height: 100vh;
-    background: black;
-    z-index: 9999;
-    bottom: 0;
-    left: 0;
+  position: fixed;
+  width: 100%;
+  height: 100vh;
+  background: black;
+  z-index: 9999;
+  bottom: 0;
+  left: 0;
 }
 
-
-
-.videoContainer{
-    display:flex;
-    flex-direction: column;
-    justify-content: end;
-    align-items: start;
-    background-color: black;
-
+.videoContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  align-items: start;
+  background-color: black;
 }
 
-.close{
-    position: fixed;
-    top:0px;
-    right:0;
-    width:100%;
-    height: 40px;
-    /* z-index: 99999999999; */
-    background: black;
-    cursor: pointer;
-    display:flex;
-    justify-content: end;
-    align-items: center;
-    padding-right: 1rem;
-    transition:.1s ease;
+.close {
+  position: fixed;
+  top: 0px;
+  right: 0;
+  width: 100%;
+  height: 40px;
+  /* z-index: 99999999999; */
+  background: black;
+  cursor: pointer;
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  padding-right: 1rem;
+  transition: 0.1s ease;
 }
 
 .youtubePlayer {
-    position:absolute;
-    bottom:0;
-    width: 100%;
-    height: calc(100% - 40px);
-    /* height: 100%; */
-    background: black;
-    padding-bottom: 20px;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: calc(100% - 40px);
+  /* height: 100%; */
+  background: black;
+  padding-bottom: 20px;
 }
 
 .iframerPlayer {
-    margin:0;
-
+  margin: 0;
 }
 
-
-.invisiblePlayerContainer{
-    position: fixed;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
-    z-index: 999999;
-    /* pointer-events: none; */
-    background: transparent;
+.invisiblePlayerContainer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 999999;
+  /* pointer-events: none; */
+  background: transparent;
 }
-
 
 @media (max-width: 992px) {
-    .image {
-        display: none;
-    }
+  .image {
+    display: none;
+  }
 
-    .mobileImage {
-        display: block;
-        object-fit: contain;
-    }
+  .mobileImage {
+    display: block;
+    object-fit: contain;
+  }
 
-    .descContainer {
-        width: 100%;
-        display: flex;
-        gap: 2rem;
-    }
+  .descContainer {
+    width: 100%;
+    display: flex;
+    gap: 2rem;
+  }
 
-    .movieDetails {
-        display: flex;
-        flex-direction: column;
-        padding: 2rem 0 2rem .5rem;
-    }
+  .movieDetails {
+    display: flex;
+    flex-direction: column;
+    padding: 2rem 0 2rem 0.5rem;
+  }
 
-    .title {
-        font-size: 2rem;
-    }
+  .title {
+    font-size: 2rem;
+  }
 
-    .subtitles {
-        margin-top: .8rem;
-    }
+  .subtitles {
+    margin-top: 0.8rem;
+  }
 
-    .rating {
-        font-size: 1.5rem;
-    }
-
-
+  .rating {
+    font-size: 1.5rem;
+  }
 }
 
-
 @media (max-width: 568px) {
+  .mobileImage {
+    object-fit: contain;
+  }
 
-    .mobileImage {
-        object-fit: contain;
-    }
+  .descContainer {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+  }
 
-    .descContainer {
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        gap: 2rem;
-    }
+  .mobileImage img {
+    width: 100%;
+    /* height:400px; */
+    object-fit: contain;
+    height: fit-content;
+  }
 
-    .mobileImage img {
-        width: 100%;
-        /* height:400px; */
-        object-fit: contain;
-        height: fit-content;
-    }
+  .movieDetails {
+    display: flex;
+    flex-direction: column;
+    padding: 2rem 0 2rem 0rem;
+  }
 
-    .movieDetails {
-        display: flex;
-        flex-direction: column;
-        padding: 2rem 0 2rem 0rem;
-    }
+  .header {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    justify-content: flex-start;
+    align-items: start;
+  }
 
-    .header {
-        display: flex;
-        flex-direction: column;
-        gap: 1rem;
-        justify-content: flex-start;
-        align-items: start;
-    }
+  .title {
+    font-size: 1.8rem;
+  }
 
-    .title {
-        font-size: 1.8rem;
-    }
+  .subtitles {
+    margin-top: 0.7rem;
+  }
 
-    .subtitles {
-        margin-top: .7rem;
-    }
+  .rating {
+    font-size: 1.2rem;
+  }
 
-    .rating {
-        font-size: 1.2rem;
-    }
-
-    .list th {
-        width: 90px;
-    }
-
-
+  .list th {
+    width: 90px;
+  }
 }

@@ -44,7 +44,7 @@ const Page = () => {
     } else {
       router.replace('/');
     }
-  }, [user]);
+  }, [router, user?._id, user?.emailVerified]);
 
   const validateEmail = async () => {
     const token = searchParams.get('token');
@@ -59,7 +59,9 @@ const Page = () => {
     }
 
     try {
-      const res = await axios.get(`/api/emailVerification?token=${token}&email=${email}`);
+      const res = await axios.get(
+        `/api/emailVerification?token=${token}&email=${email}`
+      );
       if (res.status === 200) {
         toast.success('Your Email has been verified successfully.');
         dispatch(login(res.data));
@@ -90,14 +92,28 @@ const Page = () => {
         <header className={styles.header}>
           <Logo />
           <div className={styles.signout}>
-            <button className={styles.signout} onClick={handleSignout} title='Sign out'>
-              {isSubmitting ? <Spinner /> : <FaPowerOff className={styles.signoutIcon} />}
+            <button
+              className={styles.signout}
+              onClick={handleSignout}
+              title='Sign out'
+            >
+              {isSubmitting ? (
+                <Spinner />
+              ) : (
+                <FaPowerOff className={styles.signoutIcon} />
+              )}
               {user?.displayName}
             </button>
           </div>
         </header>
         <main className={styles.main}>
-          <Image priority src={'/email-file.gif'} height={180} width={180} alt='email sticker' />
+          <Image
+            priority
+            src={'/email-file.gif'}
+            height={180}
+            width={180}
+            alt='email sticker'
+          />
           <h1>Verifying your email</h1>
           <p>
             Please wait! <br />
@@ -113,7 +129,11 @@ const Page = () => {
       <header className={styles.header}>
         <Logo />
         <div className={styles.signout}>
-          <button className={styles.signout} onClick={handleSignout} title='Sign out'>
+          <button
+            className={styles.signout}
+            onClick={handleSignout}
+            title='Sign out'
+          >
             {isSubmitting ? (
               <>
                 {/* <ImSpinner2 />
@@ -130,7 +150,13 @@ const Page = () => {
         </div>
       </header>
       <main className={styles.main}>
-        <Image priority src={'/mail.png'} height={180} width={180} alt='email sticker' />
+        <Image
+          priority
+          src={'/mail.png'}
+          height={180}
+          width={180}
+          alt='email sticker'
+        />
         <h1>Please check your email</h1>
         <p>
           You are almost there! A verification link has been sent to{' '}
