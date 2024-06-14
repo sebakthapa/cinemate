@@ -19,18 +19,25 @@ function Signup({ searchParams }) {
   const user = useSelector((state) => state.user);
   const router = useRouter();
 
-  const [email, setEmail] = useState(searchParams.e);
+  const [email, setEmail] = useState(searchParams.email);
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
-  const [emailValidation, setEmailValidation] = useState({ status: 'hidden', message: '' });
-  const [passwordValidation, setPasswordValidation] = useState({ status: 'hidden', message: '' });
+  const [emailValidation, setEmailValidation] = useState({
+    status: 'hidden',
+    message: '',
+  });
+  const [passwordValidation, setPasswordValidation] = useState({
+    status: 'hidden',
+    message: '',
+  });
   const [confirmPasswordValidation, setConfirmPasswordValidation] = useState({
     status: 'hidden',
     message: '',
   });
 
-  const [showMoreRecaptchaMessage, setShowMoreRecaptchaMesssage] = useState(false);
+  const [showMoreRecaptchaMessage, setShowMoreRecaptchaMesssage] =
+    useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   // const posts = useSelector((state) => {
@@ -46,6 +53,7 @@ function Signup({ searchParams }) {
         router.push('/verify-email');
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
   const handleSignup = async () => {
@@ -82,7 +90,10 @@ function Signup({ searchParams }) {
               }
             });
           } else {
-            console.log('Error occured while sending userData to server', error);
+            console.log(
+              'Error occured while sending userData to server',
+              error
+            );
           }
         } finally {
           setIsSubmitting(false);
@@ -90,17 +101,29 @@ function Signup({ searchParams }) {
       }
     } else {
       if (!email) {
-        setEmailValidation({ status: 'invalid', message: 'Please enter a email address.' });
+        setEmailValidation({
+          status: 'invalid',
+          message: 'Please enter a email address.',
+        });
       }
       if (password) {
         if (!confirmPassword) {
-          setConfirmPasswordValidation({ status: 'invalid', message: 'Confirm password to continue' });
+          setConfirmPasswordValidation({
+            status: 'invalid',
+            message: 'Confirm password to continue',
+          });
         }
       } else {
-        setPasswordValidation({ status: 'invalid', message: 'Create a password to continue.' });
+        setPasswordValidation({
+          status: 'invalid',
+          message: 'Create a password to continue.',
+        });
       }
       if (!confirmPassword) {
-        setConfirmPasswordValidation({ status: 'invalid', message: 'Password confirmation is required' });
+        setConfirmPasswordValidation({
+          status: 'invalid',
+          message: 'Password confirmation is required',
+        });
       }
     }
   };
@@ -112,7 +135,10 @@ function Signup({ searchParams }) {
       if (/^\w+([-]?\w+)*@\w+([-]?\w+)*(\.\w{2,3})+$/.test(email)) {
         setEmailValidation({ status: 'valid', message: '' });
       } else {
-        setEmailValidation({ status: 'invalid', message: 'Please enter a valid email.' });
+        setEmailValidation({
+          status: 'invalid',
+          message: 'Please enter a valid email.',
+        });
       }
     } else {
       setEmailValidation({ status: 'hidden' });
@@ -145,7 +171,10 @@ function Signup({ searchParams }) {
         !/\d/.test(password) ||
         !/\W/.test(password)
       ) {
-        setPasswordValidation({ status: 'invalid', message: `Required:${requiredMsg}` });
+        setPasswordValidation({
+          status: 'invalid',
+          message: `Required:${requiredMsg}`,
+        });
       } else {
         setPasswordValidation({ status: 'valid', message: '' });
       }
@@ -157,7 +186,10 @@ function Signup({ searchParams }) {
   useEffect(() => {
     if (confirmPassword) {
       if (password !== confirmPassword) {
-        setConfirmPasswordValidation({ status: 'invalid', message: 'Passwords do not match.' });
+        setConfirmPasswordValidation({
+          status: 'invalid',
+          message: 'Passwords do not match.',
+        });
       } else {
         setConfirmPasswordValidation({ status: 'valid', message: '' });
       }
@@ -172,7 +204,10 @@ function Signup({ searchParams }) {
         <div className={styles.signup__logo}>
           <Logo link={'/'} />
         </div>
-        <Banner imageHeight='100vh' style={{ height: '100vh', overflow: 'hidden' }} />
+        <Banner
+          imageHeight='100vh'
+          style={{ height: '100vh', overflow: 'hidden' }}
+        />
         <div className={styles.signup__formContainer}>
           <div className={styles.signup__form}>
             <h2 className={styles.signup__title}>Sign Up</h2>
@@ -199,7 +234,11 @@ function Signup({ searchParams }) {
                 validation={confirmPasswordValidation}
               />
             </div>
-            <button disabled={isSubmitting} className={styles.signup__button} onClick={handleSignup}>
+            <button
+              disabled={isSubmitting}
+              className={styles.signup__button}
+              onClick={handleSignup}
+            >
               {isSubmitting ? <Spinner /> : 'Sign up'}
             </button>
 
@@ -218,19 +257,32 @@ function Signup({ searchParams }) {
                 <span className={styles.moreMessage}>
                   <br />
                   <br />
-                  The information collected by Google reCAPTCHA is subject to the Google{' '}
-                  <a rel='noreferrer' target='_blank' href='https://policies.google.com/privacy'>
+                  The information collected by Google reCAPTCHA is subject to
+                  the Google{' '}
+                  <a
+                    rel='noreferrer'
+                    target='_blank'
+                    href='https://policies.google.com/privacy'
+                  >
                     Privacy Policy
                   </a>{' '}
                   and{' '}
-                  <a rel='noreferrer' target='_blank' href='https://policies.google.com/terms'>
+                  <a
+                    rel='noreferrer'
+                    target='_blank'
+                    href='https://policies.google.com/terms'
+                  >
                     Terms of Service
                   </a>{' '}
-                  , and is used for providing, maintaining, and improving the reCAPTCHA service and for
-                  general security purposes (it is not used for personalized advertising by Google).
+                  , and is used for providing, maintaining, and improving the
+                  reCAPTCHA service and for general security purposes (it is not
+                  used for personalized advertising by Google).
                 </span>
               ) : (
-                <span className={styles.link} onClick={() => setShowMoreRecaptchaMesssage(true)}>
+                <span
+                  className={styles.link}
+                  onClick={() => setShowMoreRecaptchaMesssage(true)}
+                >
                   Learn more.
                 </span>
               )}

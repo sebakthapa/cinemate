@@ -19,16 +19,17 @@ const fetchData = async (url) => {
 const page = async ({ params }) => {
   const id = params?.id;
 
-  const movieData = id && (await fetchData(`${tmdbBaseUrl}/movie/${id}?language=en-US`));
+  const movieData =
+    id && (await fetchData(`${tmdbBaseUrl}/movie/${id}?language=en-US`));
 
-  const videosData = id && (await fetchData(`${tmdbBaseUrl}/movie/${id}/videos?language=en-US`));
-  // console.log(videosData)
-  const starrings = id && (await fetchData(`${tmdbBaseUrl}/movie/${id}/credits?language=en-US`));
-  // console.log("starrings: ", starrings.cast)
+  const videosData =
+    id && (await fetchData(`${tmdbBaseUrl}/movie/${id}/videos?language=en-US`));
+  const starrings =
+    id &&
+    (await fetchData(`${tmdbBaseUrl}/movie/${id}/credits?language=en-US`));
 
   const similarMoviesUrl = `${tmdbBaseUrl}/movie/${id}/similar?language=en-US`;
 
-  // console.log(movieData)
   const {
     adult,
     title,

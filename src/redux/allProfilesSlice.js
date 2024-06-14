@@ -10,7 +10,9 @@ const allProfilesSlice = createSlice({
       return [...state, action.payload];
     },
     removeProfile: (state, action) => {
-      const newProfiles = state?.filter((profile) => profile.uid !== action.payload);
+      const newProfiles = state?.filter(
+        (profile) => profile._id !== action.payload
+      );
 
       return newProfiles;
     },
@@ -21,4 +23,5 @@ const allProfilesSlice = createSlice({
 });
 
 export default allProfilesSlice.reducer;
-export const { addProfile, removeProfile, setProfile } = allProfilesSlice.actions;
+export const { addProfile, removeProfile, setProfile } =
+  allProfilesSlice.actions;

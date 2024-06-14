@@ -1,5 +1,4 @@
 // POST => CREATE NEW PROFILE for the user
-
 import bcrypt from 'bcrypt';
 import { NextResponse } from 'next/server';
 import connectToDatabase from '@/lib/dbConnect';
@@ -18,19 +17,28 @@ export const POST = async (request) => {
     // validation part
     if (!name && !pin && hasPin) {
       return new NextResponse(
-        JSON.stringify({ message: 'Check the box below or create PIN', fields: ['name', 'pin'] }),
+        JSON.stringify({
+          message: 'Check the box below or create PIN',
+          fields: ['name', 'pin'],
+        }),
         { status: 401 }
       );
     }
 
     if (!name) {
-      return new NextResponse(JSON.stringify({ message: 'Name is required', fields: ['name'] }), {
-        status: 401,
-      });
+      return new NextResponse(
+        JSON.stringify({ message: 'Name is required', fields: ['name'] }),
+        {
+          status: 401,
+        }
+      );
     }
     if (!pin && hasPin) {
       return new NextResponse(
-        JSON.stringify({ message: 'Click on no PIN below or enter PIN', fields: ['pin'] }),
+        JSON.stringify({
+          message: 'Click on no PIN below or enter PIN',
+          fields: ['pin'],
+        }),
         { status: 401 }
       );
     }
@@ -41,15 +49,23 @@ export const POST = async (request) => {
     const allProfiles = await Profiles.find({ uid });
     if (allProfiles.length >= 3) {
       return new NextResponse(
-        JSON.stringify({ message: 'Maximum profile limit reached', fields: ['name'] }),
+        JSON.stringify({
+          message: 'Maximum profile limit reached',
+          fields: ['name'],
+        }),
         { status: 401 }
       );
     }
-    const existingProfile = allProfiles.filter((profile) => profile.name === name);
+    const existingProfile = allProfiles.filter(
+      (profile) => profile.name === name
+    );
     if (existingProfile.length > 0) {
-      return new NextResponse(JSON.stringify({ message: 'Enter another name', fields: ['name'] }), {
-        status: 401,
-      });
+      return new NextResponse(
+        JSON.stringify({ message: 'Enter another name', fields: ['name'] }),
+        {
+          status: 401,
+        }
+      );
     }
 
     // hashing pin
@@ -58,7 +74,8 @@ export const POST = async (request) => {
       if (!hash) {
         return new NextResponse(
           JSON.stringify({
-            message: 'Unable to proceed due to server error. Error in password storage',
+            message:
+              'Unable to proceed due to server error. Error in password storage',
             fields: ['password'],
           }),
           { status: 401 }
@@ -67,7 +84,14 @@ export const POST = async (request) => {
       hashedPin = hash;
     }
 
-    const newProfile = new Profiles({ uid, name, isKid, avatar, hasPin, pin: hashedPin });
+    const newProfile = new Profiles({
+      uid,
+      name,
+      isKid,
+      avatar,
+      hasPin,
+      pin: hashedPin,
+    });
     // hashedPin && (newProfile.pin = hashedPin)
     const savedProfile = await newProfile.save();
 

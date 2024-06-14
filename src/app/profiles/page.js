@@ -69,9 +69,15 @@ function Profiles() {
         </Link>
         <div className={styles.profiles__signout}>
           <div className={styles.profiles__manage}>
-            <button title='This option will be available soon'>Manage Profile</button>
+            <button title='This option will be available soon'>
+              Manage Profile
+            </button>
           </div>
-          <div className={styles.profile__signoutBtn} onClick={handleSignout} title='Sign Out from this user'>
+          <div
+            className={styles.profile__signoutBtn}
+            onClick={handleSignout}
+            title='Sign Out from this user'
+          >
             {isSubmitting ? <Spinner /> : <FaPowerOff />}
             <p> {isSubmitting ? 'Signing Out' : 'Sign Out'}</p>
           </div>
@@ -81,30 +87,38 @@ function Profiles() {
         <h1 className={styles.profiles__title}>Select your profile</h1>
         <div className={styles.profiles__container}>
           {allProfiles?.length > 0 &&
-            allProfiles.map(({ name, avatar, uid, isKid, hasPin, _id }, index) => {
-              console.log(isKid);
-
-              return (
-                <Profile
-                  key={index}
-                  name={name}
-                  avatar={avatar}
-                  uid={uid}
-                  id={_id}
-                  isKid={isKid}
-                  hasPin={hasPin}
-                />
-              );
-            })}
+            allProfiles.map(
+              ({ name, avatar, uid, isKid, hasPin, _id }, index) => {
+                return (
+                  <Profile
+                    key={index}
+                    name={name}
+                    avatar={avatar}
+                    uid={uid}
+                    id={_id}
+                    isKid={isKid}
+                    hasPin={hasPin}
+                  />
+                );
+              }
+            )}
 
           {allProfiles?.length < 3 && (
             <div className={styles.profiles__add} style={{ opacity: '.5' }}>
-              <Profile type='addProfile' name='Add Profile' avatar='/addprofile.jpg' />
+              <Profile
+                type='addProfile'
+                name='Add Profile'
+                avatar='/addprofile.jpg'
+              />
             </div>
           )}
           {!allProfiles && (
             <div className={styles.profiles__add} style={{ opacity: '.5' }}>
-              <Profile type='addProfile' name='Add Profile' avatar='/addProfile.jpg' />
+              <Profile
+                type='addProfile'
+                name='Add Profile'
+                avatar='/addProfile.jpg'
+              />
             </div>
           )}
         </div>

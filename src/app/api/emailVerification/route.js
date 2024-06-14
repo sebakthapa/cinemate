@@ -2,7 +2,10 @@ import crypto from 'crypto';
 import { NextResponse } from 'next/server';
 import bcrypt from 'bcrypt';
 import connectToDatabase from '@/lib/dbConnect';
-import { EmailVerifyHtml, emailVerifyText } from '@/lib/emails/emailVerification';
+import {
+  EmailVerifyHtml,
+  emailVerifyText,
+} from '@/lib/emails/emailVerification';
 import { sendEmail } from '@/lib/sendEmail';
 import VerificationTokens from '@/models/tokens/VerificationTokens';
 import Users from '@/models/users';
@@ -24,7 +27,10 @@ export const POST = async (req) => {
   try {
     const { email, userId } = await req.json();
     if (!email || !userId) {
-      return NextResponse.json({ error: 'Email or userId is required' }, { status: 400 });
+      return NextResponse.json(
+        { error: 'Email or userId is required' },
+        { status: 400 }
+      );
     }
 
     const isValidEmail = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email);
@@ -38,7 +44,10 @@ export const POST = async (req) => {
     const user = await Users.findOne({ email, _id: userId });
 
     if (!user) {
-      return NextResponse.json({ error: `Email doesn't exist!` }, { status: 400 });
+      return NextResponse.json(
+        { error: `Email doesn't exist!` },
+        { status: 400 }
+      );
     }
 
     let token = await VerificationTokens.findOne({ email });
@@ -66,7 +75,10 @@ export const POST = async (req) => {
     const emailRes = await sendEmail({ subject, email, text, html });
 
     if (emailRes?.accepted?.length > 0) {
-      return NextResponse.json({ link, message: 'Password reset Email sent!' }, { status: 200 });
+      return NextResponse.json(
+        { link, message: 'Password reset Email sent!' },
+        { status: 200 }
+      );
     } else {
       return NextResponse.json(
         { error: true, message: 'Unable to send verification email!' },
@@ -86,14 +98,20 @@ export const GET = async (req) => {
     const email = searchParams.get('email');
 
     if (!token || !email) {
-      return NextResponse.json({ error: 'Missing some data! Re-click the email link.' }, { status: 401 });
+      return NextResponse.json(
+        { error: 'Missing some data! Re-click the email link.' },
+        { status: 401 }
+      );
     }
 
     // const user = await Users.find({ email });
     const tokenData = await VerificationTokens.findOne({ email });
 
     if (!tokenData) {
-      return NextResponse.json({ error: 'Invalid or expired link!' }, { status: 401 });
+      return NextResponse.json(
+        { error: 'Invalid or expired link!' },
+        { status: 401 }
+      );
     }
 
     const { token: hashedToken } = tokenData;
@@ -101,7 +119,10 @@ export const GET = async (req) => {
     const isValid = await bcrypt.compare(token, hashedToken);
 
     if (!isValid) {
-      return NextResponse.json({ error: 'Invalid or expired link!' }, { status: 401 });
+      return NextResponse.json(
+        { error: 'Invalid or expired link!' },
+        { status: 401 }
+      );
     }
 
     const updatedUser = await Users.findOneAndUpdate(
@@ -110,7 +131,10 @@ export const GET = async (req) => {
       { new: true }
     ).select('-password');
     if (!updatedUser) {
-      return NextResponse.json({ error: 'Unable to reset password.' }, { status: 503 });
+      return NextResponse.json(
+        { error: 'Unable to reset password.' },
+        { status: 503 }
+      );
     }
 
     await VerificationTokens.findOneAndDelete({ email });
@@ -118,10 +142,15 @@ export const GET = async (req) => {
     if (updatedUser) {
       return NextResponse.json(updatedUser, { status: 200 });
     } else {
-      return NextResponse.json({ error: true, message: 'Some error occured' }, { status: 500 });
+      return NextResponse.json(
+        { error: true, message: 'Some error occured' },
+        { status: 500 }
+      );
     }
   } catch (error) {
-    console.log('ERROR while Validating verification tokien for email verification');
+    console.log(
+      'ERROR while Validating verification tokien for email verification'
+    );
     throw error;
   }
 };

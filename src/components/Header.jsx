@@ -27,7 +27,7 @@ function Header() {
     { name: 'Home', link: '/home' },
     { name: 'TV shows', link: '/tv' },
     { name: 'Movies', link: '/movie' },
-    { name: 'My List', link: '#' },
+    // { name: 'My List', link: '#' },
   ];
 
   const handleLogOut = () => {
@@ -72,7 +72,10 @@ function Header() {
 
   return (
     <nav className={`${styles.header}`}>
-      <button className={styles.menuIcon} onClick={() => setShowMobileNav(true)}>
+      <button
+        className={styles.menuIcon}
+        onClick={() => setShowMobileNav(true)}
+      >
         <MdOutlineMenu />
       </button>
       <div className={styles.header__left}>
@@ -85,7 +88,10 @@ function Header() {
           <ul>
             {links.map(({ name, link }) => (
               <li key={name}>
-                <Link className={pathname.includes(link) ? styles.activeLink : ''} href={`${link}`}>
+                <Link
+                  className={pathname.includes(link) ? styles.activeLink : ''}
+                  href={`${link}`}
+                >
                   {name}
                 </Link>
               </li>
@@ -107,7 +113,10 @@ function Header() {
 
       <div className={styles.header__right}>
         {!pathname.includes('search') && (
-          <form onSubmit={handleSearch} className={`${styles.header__search} ${styles.contractedSearch}`}>
+          <form
+            onSubmit={handleSearch}
+            className={`${styles.header__search} ${styles.contractedSearch}`}
+          >
             <input
               autoComplete='off'
               // onFocus={(e) => {
@@ -138,7 +147,11 @@ function Header() {
           onClick={handleLogOut}
           title={`Logout ${profile?.name || 'this'} profile`}
         >
-          {isSubmitting ? <Spinner /> : <FaPowerOff className={styles.signoutIcon} />}
+          {isSubmitting ? (
+            <Spinner />
+          ) : (
+            <FaPowerOff className={styles.signoutIcon} />
+          )}
           {profile?.name}
         </div>
       </div>
@@ -148,11 +161,16 @@ function Header() {
           left: showMobileNav ? '0' : '-100vw',
           transition: !showMobileNav ? 'none' : '.2s ease-in-out',
         }}
-        onClick={(e) => e.target.classList.contains(styles.overlay) && setShowMobileNav(false)}
+        onClick={(e) =>
+          e.target.classList.contains(styles.overlay) && setShowMobileNav(false)
+        }
         className={styles.overlay}
       ></div>
 
-      <div style={{ left: showMobileNav ? '0' : '-400px' }} className={styles.mobileNav}>
+      <div
+        style={{ left: showMobileNav ? '0' : '-400px' }}
+        className={styles.mobileNav}
+      >
         <Logo />
         <ul>
           {links.map(({ name, link }) => (
